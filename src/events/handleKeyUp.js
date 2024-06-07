@@ -1,21 +1,23 @@
+import { gameState } from "../../index.js";
+
 export const handleKeyUp = (event) => {
   console.log("keyup: " + event.key);
   switch (event.key) {
     case "ArrowUp":
     case "w":
-      interactFlags.up = false;
+      gameState.setFlag("up", false);
       break;
     case "ArrowDown":
     case "s":
-      interactFlags.down = false;
+      gameState.setFlag("down", false);
       break;
     case "ArrowLeft":
     case "a":
-      interactFlags.left = false;
+      gameState.setFlag("left", false);
       break;
     case "ArrowRight":
     case "d":
-      interactFlags.right = false;
+      gameState.setFlag("right", false);
       break;
   }
 }
