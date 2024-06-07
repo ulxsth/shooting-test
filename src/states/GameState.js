@@ -1,5 +1,9 @@
 export class GameState {
-  constructor() {
+    constructor() {
+    this.objects = [
+      { type: "player", x: 0, y: 0, width: 40, height: 50, color: "blue" },
+    ];
+
     // TODO: ビットフラグ形式にリファクタ
     this.interactFlags = {
       up: false,
