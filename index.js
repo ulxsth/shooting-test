@@ -4,6 +4,7 @@ import handleKeyDown from "./src/events/handleKeyDown.js";
 import handleKeyUp from "./src/events/handleKeyUp.js";
 import handleMouseClick from "./src/events/handleMouseDown.js";
 import handleMouseUp from "./src/events/handleMouseUp.js";
+import GameState from "./src/states/GameState.js";
 
 const PLAYER_SPEED = 5;
 const BULLET_SPEED = 10;
@@ -11,6 +12,7 @@ const BULLET_SPEED = 10;
 const canvas = document.getElementById("mainCanvas");
 const ctx = canvas.getContext("2d");
 
+export const gameState = new GameState();
 let shootIntervalId;
 let isShooting = false;
 
@@ -80,10 +82,11 @@ const getPlayerObj = () => objects.find((obj) => obj.type === "player");
  */
 function updatePlayerPosition() {
   const player = getPlayerObj();
-  if (interactFlags.up) player.y -= PLAYER_SPEED;
-  if (interactFlags.down) player.y += PLAYER_SPEED;
-  if (interactFlags.left) player.x -= PLAYER_SPEED;
-  if (interactFlags.right) player.x += PLAYER_SPEED;
+  const flags = gameState.getAllFlags();
+  if (flags.up) player.y -= PLAYER_SPEED;
+  if (flags.down) player.y += PLAYER_SPEED;
+  if (flags.left) player.x -= PLAYER_SPEED;
+  if (flags.right) player.x += PLAYER_SPEED;
 }
 
 // 弾関連
