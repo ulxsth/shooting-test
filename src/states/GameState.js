@@ -19,6 +19,8 @@ class GameState {
   updateFlags(flag, value) {
     if (this.interactFlags.hasOwnProperty(flag)) {
       this.interactFlags[flag] = value;
+    } else {
+      throw new Error(`Invalid flag name: ${flag}`);
     }
   }
 
@@ -36,7 +38,11 @@ class GameState {
    * @returns {boolean} フラグの値
    */
   isFlag(name) {
-    return this.interactFlags[name];
+    if (this.interactFlags.hasOwnProperty(name)) {
+      return this.interactFlags[name];
+    } else {
+      throw new Error(`Invalid flag name: ${name}`);
+    }
   }
 }
 
