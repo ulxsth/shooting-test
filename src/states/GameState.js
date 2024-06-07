@@ -1,5 +1,6 @@
 import { PLAYER_SPEED, BULLET_SPEED } from "../constants.js";
 import { PlayerShip } from "../objects/PlayerShip.js";
+import { PlayerBullet } from "../objects/PlayerBullet.js";
 
 export class GameState {
   constructor() {
@@ -66,14 +67,7 @@ export class GameState {
    */
   shoot() {
     const player = this.getPlayerObj();
-    const bullet = {
-      type: "playerBullet",
-      x: player.x,
-      y: player.y,
-      width: 10,
-      height: 10,
-      color: "red",
-    };
+    const bullet = new PlayerBullet(player.x, player.y);
     this.objects.push(bullet);
   }
 
@@ -82,17 +76,16 @@ export class GameState {
    * @returns {Object[]}
    */
   getPlayerBullets = () =>
-    this.objects.filter((obj) => obj.type === "playerBullet");
+    this.objects.filter((obj) => obj instanceof PlayerBullet);
 
   /**
    * 弾の位置を更新する
    */
   updateBulletPosition() {
     const bullets = this.getPlayerBullets();
-    if (!bullets) return;
 
     bullets.forEach((bullet) => {
-      bullet.y += BULLET_SPEED;
+      bullet.updatePosition();
 
       // 画面外に出た弾をobjectsから削除
       // TODO: 計算量が O(N) （Nはすべてのオブジェクト数）なので、パフォーマンスを改善する
