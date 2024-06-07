@@ -33,9 +33,6 @@ import { handleMouseClick } from "./src/events/handleMouseDown.js";
 import { handleMouseUp } from "./src/events/handleMouseUp.js";
 import { GameState } from "./src/states/GameState.js";
 
-const PLAYER_SPEED = 5;
-const BULLET_SPEED = 10;
-
 const canvas = document.getElementById("mainCanvas");
 const ctx = canvas.getContext("2d");
 
