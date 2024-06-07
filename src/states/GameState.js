@@ -1,3 +1,5 @@
+import { PLAYER_SPEED, BULLET_SPEED } from "../constants.js";
+
 export class GameState {
   constructor() {
     this.objects = [
