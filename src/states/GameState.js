@@ -14,6 +14,27 @@ export class GameState {
       rightClick: false,
     };
   }
+  // フラグ関連
+  /**
+   * すべてのフラグを取得する。
+   * @returns {Object} フラグ
+   */
+  getAllFlags() {
+    return this.interactFlags;
+  }
+
+  /**
+   * 特定のフラグが立っているかどうかを取得する。
+   * @param {string} name フラグ名
+   * @returns {boolean} フラグの値
+   */
+  isFlag(name) {
+    if (this.interactFlags.hasOwnProperty(name)) {
+      return this.interactFlags[name];
+    } else {
+      throw new Error(`Invalid flag name: ${name}`);
+    }
+  }
 
   // プレイヤー関連
   /**
@@ -47,27 +68,6 @@ export class GameState {
     }
   }
 
-  /**
-   * すべてのフラグを取得する。
-   * @returns {Object} フラグ
-   */
-  getAllFlags() {
-    return this.interactFlags;
-  }
-
-  /**
-   * 特定のフラグが立っているかどうかを取得する。
-   * @param {string} name フラグ名
-   * @returns {boolean} フラグの値
-   */
-  isFlag(name) {
-    if (this.interactFlags.hasOwnProperty(name)) {
-      return this.interactFlags[name];
-    } else {
-      throw new Error(`Invalid flag name: ${name}`);
-    }
-  }
-
   // 弾関連
   /**
    * 射撃処理
@@ -82,14 +82,15 @@ export class GameState {
       height: 10,
       color: "red",
     };
-    objects.push(bullet);
+    this.objects.push(bullet);
   }
 
   /**
    * プレイヤーの弾を取得する
    * @returns {Object[]}
    */
-  getPlayerBullets = () => objects.filter((obj) => obj.type === "playerBullet");
+  getPlayerBullets = () =>
+    this.objects.filter((obj) => obj.type === "playerBullet");
 
   /**
    * 弾の位置を更新する
@@ -104,7 +105,7 @@ export class GameState {
       // 画面外に出た弾をobjectsから削除
       // TODO: 計算量が O(N) （Nはすべてのオブジェクト数）なので、パフォーマンスを改善する
       if (bullet.y < 0) {
-        objects.splice(objects.indexOf(bullet), 1);
+        this.objects.splice(this.objects.indexOf(bullet), 1);
       }
     });
   }
