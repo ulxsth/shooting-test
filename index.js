@@ -1,3 +1,30 @@
+
+//
+//                       _oo0oo_
+//                      o8888888o
+//                      88" . "88
+//                      (| -_- |)
+//                      0\  =  /0
+//                    ___/`---'\___
+//                  .' \\|     |// '.
+//                 / \\|||  :  |||// \
+//                / _||||| -:- |||||- \
+//               |   | \\\  -  /// |   |
+//               | \_|  ''\---/''  |_/ |
+//               \  .-\__  '-'  ___/-. /
+//             ___'. .'  /--.--\  `. .'___
+//          ."" '<  `.___\_<|>_/___.' >' "".
+//         | | :  `- \`.;`\ _ /`;.`/ - ` : | |
+//         \  \ `_.   \_ __\ /__ _/   .-` /  /
+//     =====`-.____`.___ \_____/___.-`___.-'=====
+//                       `=---='
+//
+//
+//     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//
+//                     永無BUG大仏
+//
+
 import { handleClick } from "./src/events/handleClick.js";
 import { handleContextMenu } from "./src/events/handleContextMenu.js";
 import { handleKeyDown } from "./src/events/handleKeyDown.js";
@@ -15,10 +42,6 @@ const ctx = canvas.getContext("2d");
 export const gameState = new GameState();
 let shootIntervalId;
 let isShooting = false;
-
-const objects = [
-  { type: "player", x: 0, y: 0, width: 40, height: 50, color: "blue" },
-];
 
 /**
  * 描画
@@ -61,69 +84,4 @@ function init() {
 
   window.requestAnimationFrame(draw);
 }
-
-// プレイヤー関連
-/**
- * プレイヤーを取得する
- * @returns {Object}
- */
-const getPlayerObj = () => objects.find((obj) => obj.type === "player");
-
-/**
- * プレイヤーの位置を更新する
- */
-function updatePlayerPosition() {
-  const player = getPlayerObj();
-  const flags = gameState.getAllFlags();
-  if (flags.up) player.y -= PLAYER_SPEED;
-  if (flags.down) player.y += PLAYER_SPEED;
-  if (flags.left) player.x -= PLAYER_SPEED;
-  if (flags.right) player.x += PLAYER_SPEED;
-}
-
-// 弾関連
-/**
- * 射撃処理
- */
-export function shoot() {
-  const player = getPlayerObj();
-  const bullet = { type: "playerBullet", x: player.x, y: player.y, width: 10, height: 10, color: "red" };
-  objects.push(bullet);
-}
-
-/**
- * プレイヤーの弾を取得する
- * @returns {Object[]}
- */
-const getPlayerBullets = () => objects.filter((obj) => obj.type === "playerBullet");
-
-/**
- * 弾の位置を更新する
- */
-function updateBulletPosition() {
-  const bullets = getPlayerBullets();
-  if(!bullets) return;
-
-  bullets.forEach((bullet) => {
-    bullet.y += BULLET_SPEED;
-
-    // 画面外に出た弾をobjectsから削除
-    // TODO: 計算量が O(N) （Nはすべてのオブジェクト数）なので、パフォーマンスを改善する
-    if (bullet.y < 0) {
-        objects.splice(objects.indexOf(bullet), 1);
-    }
-  });
-}
-
-/**
- * キャンバスの中心を取得する
- * @returns {Object{x: number, y: number}}
- */
-const getCenterOfCanvas = () => {
-  return {
-    x: canvas.width / 2,
-    y: canvas.height / 2,
-  };
-};
-
 init();
