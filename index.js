@@ -1,4 +1,5 @@
 import { handleClick } from "./src/events/handleClick";
+import { handleContextMenu } from "./src/events/handleContextMenu";
 import { handleKeyDown } from "./src/events/handleKeyDown";
 import { handleKeyUp } from "./src/events/handleKeyUp";
 import { handleMouseClick } from "./src/events/handleMouseDown";
@@ -56,16 +57,13 @@ function init() {
   objects[0].x = center.x;
   objects[0].y = center.y;
 
+  // イベント登録
   document.addEventListener("keydown", handleKeyDown);
   document.addEventListener("keyup", handleKeyUp);
   document.addEventListener("click", handleClick);
   document.addEventListener("mousedown", handleMouseClick);
   document.addEventListener("mouseup", handleMouseUp);
-
-  // 右クリック時にメニューが表示されるのを防ぐ
-  document.addEventListener("contextmenu", function (event) {
-    event.preventDefault();
-  });
+  document.addEventListener("contextmenu", handleContextMenu);
 
   window.requestAnimationFrame(draw);
 }
