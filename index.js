@@ -1,9 +1,9 @@
-import { handleClick } from "./src/events/handleClick";
-import { handleContextMenu } from "./src/events/handleContextMenu";
-import { handleKeyDown } from "./src/events/handleKeyDown";
-import { handleKeyUp } from "./src/events/handleKeyUp";
-import { handleMouseClick } from "./src/events/handleMouseDown";
-import { handleMouseUp } from "./src/events/handleMouseUp";
+import handleClick from "./src/events/handleClick.js";
+import handleContextMenu from "./src/events/handleContextMenu.js";
+import handleKeyDown from "./src/events/handleKeyDown.js";
+import handleKeyUp from "./src/events/handleKeyUp.js";
+import handleMouseClick from "./src/events/handleMouseDown.js";
+import handleMouseUp from "./src/events/handleMouseUp.js";
 
 const PLAYER_SPEED = 5;
 const BULLET_SPEED = 10;
