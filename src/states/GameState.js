@@ -1,4 +1,4 @@
-class GameState {
+export class GameState {
   constructor() {
     // TODO: ビットフラグ形式にリファクタ
     this.interactFlags = {
@@ -45,6 +45,4 @@ class GameState {
     }
   }
 }
-
-export default GameState;
 
