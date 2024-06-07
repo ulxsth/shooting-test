@@ -1,5 +1,7 @@
+import { handleClick } from "./src/events/handleClick";
 import { handleKeyDown } from "./src/events/handleKeyDown";
 import { handleKeyUp } from "./src/events/handleKeyUp";
+import { handleMouseClick } from "./src/events/handleMouseDown";
 
 const PLAYER_SPEED = 5;
 const BULLET_SPEED = 10;
@@ -55,24 +57,8 @@ function init() {
 
   document.addEventListener("keydown", handleKeyDown);
   document.addEventListener("keyup", handleKeyUp);
-
-  // マウスボタンをクリックしたときの処理
-  document.addEventListener("click", (event) => {
-    console.log("click: " + event.button);
-    if (event.button === 0) {
-      shoot();
-    }
-  });
-
-  // マウスボタンを押したときの処理
-  document.addEventListener("mousedown", (event) => {
-    console.log("mousedown: " + event.button);
-    if (event.button === 0) {
-      interactFlags.leftClick = true;
-    } else if (event.button === 2) {
-      interactFlags.rightClick = true;
-    }
-  });
+  document.addEventListener("click", handleClick);
+  document.addEventListener("mousedown", handleMouseClick);
 
   // マウスボタンを離したときの処理
   document.addEventListener("mouseup", (event) => {
