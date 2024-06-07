@@ -37,8 +37,6 @@ const canvas = document.getElementById("mainCanvas");
 const ctx = canvas.getContext("2d");
 
 export const gameState = new GameState();
-let shootIntervalId;
-let isShooting = false;
 
 /**
  * 描画
