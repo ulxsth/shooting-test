@@ -1,3 +1,10 @@
+import { handleClick } from "./src/events/handleClick";
+import { handleContextMenu } from "./src/events/handleContextMenu";
+import { handleKeyDown } from "./src/events/handleKeyDown";
+import { handleKeyUp } from "./src/events/handleKeyUp";
+import { handleMouseClick } from "./src/events/handleMouseDown";
+import { handleMouseUp } from "./src/events/handleMouseUp";
+
 const PLAYER_SPEED = 5;
 const BULLET_SPEED = 10;
 
@@ -50,84 +57,13 @@ function init() {
   objects[0].x = center.x;
   objects[0].y = center.y;
 
-  // キーが押されたときの処理
-  document.addEventListener("keydown", (event) => {
-    console.log("keydown: " + event.key);
-    switch (event.key) {
-      case "ArrowUp":
-      case "w":
-        interactFlags.up = true;
-        break;
-      case "ArrowDown":
-      case "s":
-        interactFlags.down = true;
-        break;
-      case "ArrowLeft":
-      case "a":
-        interactFlags.left = true;
-        break;
-      case "ArrowRight":
-      case "d":
-        interactFlags.right = true;
-        break;
-    }
-  });
-
-  // キーが離されたときの処理
-  document.addEventListener("keyup", (event) => {
-    console.log("keyup: " + event.key);
-    switch (event.key) {
-      case "ArrowUp":
-      case "w":
-        interactFlags.up = false;
-        break;
-      case "ArrowDown":
-      case "s":
-        interactFlags.down = false;
-        break;
-      case "ArrowLeft":
-      case "a":
-        interactFlags.left = false;
-        break;
-      case "ArrowRight":
-      case "d":
-        interactFlags.right = false;
-        break;
-    }
-  });
-
-  // マウスボタンをクリックしたときの処理
-  document.addEventListener("click", (event) => {
-    console.log("click: " + event.button);
-    if (event.button === 0) {
-      shoot();
-    }
-  });
-
-  // マウスボタンを押したときの処理
-  document.addEventListener("mousedown", (event) => {
-    console.log("mousedown: " + event.button);
-    if (event.button === 0) {
-      interactFlags.leftClick = true;
-    } else if (event.button === 2) {
-      interactFlags.rightClick = true;
-    }
-  });
-
-  // マウスボタンを離したときの処理
-  document.addEventListener("mouseup", (event) => {
-    console.log("mouseup: " + event.button);
-    if (event.button === 0) {
-      interactFlags.leftClick = false;
-    } else if (event.button === 2) {
-      interactFlags.rightClick = false;
-    }
-  });
-
-  // 右クリック時にメニューが表示されるのを防ぐ
-  document.addEventListener("contextmenu", function (event) {
-    event.preventDefault();
-  });
+  // イベント登録
+  document.addEventListener("keydown", handleKeyDown);
+  document.addEventListener("keyup", handleKeyUp);
+  document.addEventListener("click", handleClick);
+  document.addEventListener("mousedown", handleMouseClick);
+  document.addEventListener("mouseup", handleMouseUp);
+  document.addEventListener("contextmenu", handleContextMenu);
 
   window.requestAnimationFrame(draw);
 }
