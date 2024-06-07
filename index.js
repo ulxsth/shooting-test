@@ -85,7 +85,7 @@ function updatePlayerPosition() {
 /**
  * 射撃処理
  */
-function shoot() {
+export function shoot() {
   const player = getPlayerObj();
   const bullet = { type: "playerBullet", x: player.x, y: player.y, width: 10, height: 10, color: "red" };
   objects.push(bullet);
