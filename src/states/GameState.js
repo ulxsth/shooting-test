@@ -65,10 +65,7 @@ export class GameState {
   updatePlayerPosition = () => {
     const player = this.getPlayerObj();
     const flags = this.getAllFlags();
-    if (flags.up) player.y -= PLAYER_SPEED;
-    if (flags.down) player.y += PLAYER_SPEED;
-    if (flags.left) player.x -= PLAYER_SPEED;
-    if (flags.right) player.x += PLAYER_SPEED;
+    player.updatePosition(flags);
   };
 
   // 弾関連
