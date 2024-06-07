@@ -2,6 +2,7 @@ import { handleClick } from "./src/events/handleClick";
 import { handleKeyDown } from "./src/events/handleKeyDown";
 import { handleKeyUp } from "./src/events/handleKeyUp";
 import { handleMouseClick } from "./src/events/handleMouseDown";
+import { handleMouseUp } from "./src/events/handleMouseUp";
 
 const PLAYER_SPEED = 5;
 const BULLET_SPEED = 10;
@@ -59,16 +60,7 @@ function init() {
   document.addEventListener("keyup", handleKeyUp);
   document.addEventListener("click", handleClick);
   document.addEventListener("mousedown", handleMouseClick);
-
-  // マウスボタンを離したときの処理
-  document.addEventListener("mouseup", (event) => {
-    console.log("mouseup: " + event.button);
-    if (event.button === 0) {
-      interactFlags.leftClick = false;
-    } else if (event.button === 2) {
-      interactFlags.rightClick = false;
-    }
-  });
+  document.addEventListener("mouseup", handleMouseUp);
 
   // 右クリック時にメニューが表示されるのを防ぐ
   document.addEventListener("contextmenu", function (event) {
