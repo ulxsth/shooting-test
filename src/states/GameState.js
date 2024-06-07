@@ -16,7 +16,7 @@ export class GameState {
    * @param {string} flag フラグ名
    * @param {boolean} value フラグの値
    */
-  updateFlags(flag, value) {
+  setFlag(flag, value) {
     if (this.interactFlags.hasOwnProperty(flag)) {
       this.interactFlags[flag] = value;
     } else {
