@@ -8,3 +8,6 @@ export const PLAYER_BULLET_HEIGHT = 10;
 export const PLAYER_BULLET_SPEED = 10;
 export const PLAYER_BULLET_COLOR = "blue";
 
+export const ENEMY_WIDTH = 20;
+export const ENEMY_HEIGHT = 20;
+export const ENEMY_COLOR = "red";
