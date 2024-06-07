@@ -1,4 +1,3 @@
-import { PLAYER_SPEED, BULLET_SPEED } from "../constants.js";
 import { PlayerShip } from "../objects/PlayerShip.js";
 import { PlayerBullet } from "../objects/PlayerBullet.js";
 
@@ -81,7 +80,7 @@ export class GameState {
   /**
    * 弾の位置を更新する
    */
-  updateBulletPosition() {
+  updateBulletsPosition() {
     const bullets = this.getPlayerBullets();
 
     bullets.forEach((bullet) => {

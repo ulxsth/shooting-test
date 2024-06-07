@@ -47,7 +47,7 @@ function draw() {
 
   // 状態更新
   gameState.updatePlayerPosition();
-  gameState.updateBulletPosition();
+  gameState.updateBulletsPosition();
 
   // 描画
   gameState.objects.forEach((obj) => {
