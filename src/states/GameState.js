@@ -17,14 +17,6 @@ export class GameState {
       rightClick: false,
     };
   }
-  // フラグ関連
-  /**
-   * すべてのフラグを取得する。
-   * @returns {Object} フラグ
-   */
-  getAllFlags() {
-    return this.interactFlags;
-  }
 
   /**
    * 特定のフラグが立っているかどうかを取得する。
@@ -64,7 +56,7 @@ export class GameState {
    */
   updatePlayerPosition = () => {
     const player = this.getPlayerObj();
-    const flags = this.getAllFlags();
+    const flags = this.interactFlags;
     player.updatePosition(flags);
   };
 
