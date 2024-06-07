@@ -19,14 +19,6 @@ let isShooting = false;
 const objects = [
   { type: "player", x: 0, y: 0, width: 40, height: 50, color: "blue" },
 ];
-const interactFlags = {
-  up: false,
-  down: false,
-  left: false,
-  right: false,
-  leftClick: false,
-  rightClick: false,
-};
 
 /**
  * 描画
