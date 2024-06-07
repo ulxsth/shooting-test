@@ -70,9 +70,10 @@ function init() {
   canvas.height = document.documentElement.clientHeight;
 
   // canvas の中心にプレイヤーを配置
+  const player = gameState.getPlayerObj();
   const center = getCenterOfCanvas();
-  objects[0].x = center.x;
-  objects[0].y = center.y;
+  player.x = center.x;
+  player.y = center.y;
 
   // イベント登録
   document.addEventListener("keydown", handleKeyDown);
@@ -84,4 +85,9 @@ function init() {
 
   window.requestAnimationFrame(draw);
 }
+
+function getCenterOfCanvas() {
+  return { x: canvas.width / 2, y: canvas.height / 2 };
+}
+
 init();
