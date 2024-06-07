@@ -47,8 +47,8 @@ export class GameState {
    * プレイヤーの位置を更新する
    */
   updatePlayerPosition = () => {
-    const player = getPlayerObj();
-    const flags = gameState.getAllFlags();
+    const player = this.getPlayerObj();
+    const flags = this.getAllFlags();
     if (flags.up) player.y -= PLAYER_SPEED;
     if (flags.down) player.y += PLAYER_SPEED;
     if (flags.left) player.x -= PLAYER_SPEED;
@@ -73,7 +73,7 @@ export class GameState {
    * 射撃処理
    */
   shoot() {
-    const player = getPlayerObj();
+    const player = this.getPlayerObj();
     const bullet = {
       type: "playerBullet",
       x: player.x,
@@ -96,7 +96,7 @@ export class GameState {
    * 弾の位置を更新する
    */
   updateBulletPosition() {
-    const bullets = getPlayerBullets();
+    const bullets = this.getPlayerBullets();
     if (!bullets) return;
 
     bullets.forEach((bullet) => {

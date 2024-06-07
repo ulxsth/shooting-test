@@ -51,9 +51,9 @@ function draw() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
   // 描画
-  updatePlayerPosition();
-  updateBulletPosition();
-  objects.forEach((obj) => {
+  gameState.updatePlayerPosition();
+  gameState.updateBulletPosition();
+  gameState.objects.forEach((obj) => {
     ctx.fillStyle = obj.color;
     ctx.fillRect(obj.x, obj.y, obj.width, obj.height);
   });
