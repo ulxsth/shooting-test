@@ -15,6 +15,25 @@ export class GameState {
     };
   }
 
+// プレイヤー関連
+/**
+ * プレイヤーを取得する
+ * @returns {Object}
+ */
+getPlayerObj = () => this.objects.find((obj) => obj.type === "player");
+
+/**
+ * プレイヤーの位置を更新する
+ */
+updatePlayerPosition = () => {
+  const player = getPlayerObj();
+  const flags = gameState.getAllFlags();
+  if (flags.up) player.y -= PLAYER_SPEED;
+  if (flags.down) player.y += PLAYER_SPEED;
+  if (flags.left) player.x -= PLAYER_SPEED;
+  if (flags.right) player.x += PLAYER_SPEED;
+}
+
   /**
    * フラグを更新する。
    * @param {string} flag フラグ名
