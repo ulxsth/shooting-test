@@ -6,4 +6,8 @@ export class GameObject {
     this.height = height;
     this.color = color;
   }
+
+  updatePosition() {
+    throw new Error("This method is not implemented");
+  }
 }
