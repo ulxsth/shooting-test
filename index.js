@@ -1,4 +1,5 @@
 import { handleKeyDown } from "./src/events/handleKeyDown";
+import { handleKeyUp } from "./src/events/handleKeyUp";
 
 const PLAYER_SPEED = 5;
 const BULLET_SPEED = 10;
@@ -53,29 +54,7 @@ function init() {
   objects[0].y = center.y;
 
   document.addEventListener("keydown", handleKeyDown);
-
-  // キーが離されたときの処理
-  document.addEventListener("keyup", (event) => {
-    console.log("keyup: " + event.key);
-    switch (event.key) {
-      case "ArrowUp":
-      case "w":
-        interactFlags.up = false;
-        break;
-      case "ArrowDown":
-      case "s":
-        interactFlags.down = false;
-        break;
-      case "ArrowLeft":
-      case "a":
-        interactFlags.left = false;
-        break;
-      case "ArrowRight":
-      case "d":
-        interactFlags.right = false;
-        break;
-    }
-  });
+  document.addEventListener("keyup", handleKeyUp);
 
   // マウスボタンをクリックしたときの処理
   document.addEventListener("click", (event) => {
