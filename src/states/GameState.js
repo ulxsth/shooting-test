@@ -1,9 +1,10 @@
 import { PLAYER_SPEED, BULLET_SPEED } from "../constants.js";
+import { PlayerShip } from "../objects/PlayerShip.js";
 
 export class GameState {
   constructor() {
     this.objects = [
-      { type: "player", x: 0, y: 0, width: 40, height: 50, color: "blue" },
+      new PlayerShip(0, 0),
     ];
 
     // TODO: ビットフラグ形式にリファクタ
