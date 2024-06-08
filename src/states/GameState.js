@@ -104,6 +104,18 @@ export class GameState {
   getAllEnemyObjects = () => this.objects.filter((obj) => obj instanceof EnemyObject);
 
   /**
+   * 敵オブジェクトの状態を更新する
+   */
+  updateEnemyObjects() {
+    const enemies = this.getAllEnemyObjects();
+    enemies.forEach((enemy) => {
+      if (enemy.hp <= 0) {
+        this.objects.splice(this.objects.indexOf(enemy), 1);
+      }
+    });
+  }
+
+  /**
    * PlayerBulletとの衝突判定を行う
    */
   checkBulletCollision() {
