@@ -48,7 +48,7 @@ export class GameState {
   // プレイヤー関連
   /**
    * プレイヤーを取得する
-   * @returns {Object}
+   * @returns {PlayerShip}
    */
   getPlayerObj = () => this.objects.find((obj) => obj instanceof PlayerShip);
 
@@ -74,7 +74,7 @@ export class GameState {
 
   /**
    * プレイヤーの弾を取得する
-   * @returns {Object[]}
+   * @returns {PlayerBullet[]}
    */
   getAllPlayerBullets = () =>
     this.objects.filter((obj) => obj instanceof PlayerBullet);
@@ -99,7 +99,7 @@ export class GameState {
   // 敵オブジェクト関連
   /**
    * 敵オブジェクトを取得する
-   * @returns {Object[]}
+   * @returns {EnemyObject[]}
    */
   getAllEnemyObjects = () => this.objects.filter((obj) => obj instanceof EnemyObject);
 
