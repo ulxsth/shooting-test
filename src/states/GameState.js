@@ -1,5 +1,6 @@
 import { PlayerShip } from "../objects/PlayerShip.js";
 import { PlayerBullet } from "../objects/PlayerBullet.js";
+import { EnemyObject } from "../objects/EnemyObject.js";
 
 export class GameState {
   constructor() {
@@ -74,14 +75,14 @@ export class GameState {
    * プレイヤーの弾を取得する
    * @returns {Object[]}
    */
-  getPlayerBullets = () =>
+  getAllPlayerBullets = () =>
     this.objects.filter((obj) => obj instanceof PlayerBullet);
 
   /**
    * 弾の位置を更新する
    */
   updateBulletsPosition() {
-    const bullets = this.getPlayerBullets();
+    const bullets = this.getAllPlayerBullets();
 
     bullets.forEach((bullet) => {
       bullet.updatePosition();
@@ -91,6 +92,31 @@ export class GameState {
       if (bullet.y < 0) {
         this.objects.splice(this.objects.indexOf(bullet), 1);
       }
+    });
+  }
+
+  // 敵オブジェクト関連
+  /**
+   * 敵オブジェクトを取得する
+   * @returns {Object[]}
+   */
+  getAllEnemyObjects = () => this.objects.filter((obj) => obj instanceof EnemyObject);
+
+  /**
+   * PlayerBulletとの衝突判定を行う
+   */
+  checkBulletCollision() {
+    const bullets = this.getAllPlayerBullets();
+    const enemies = this.getAllEnemyObjects();
+
+    // TODO: O(N^2) なので、パフォーマンスを改善する
+    bullets.forEach((bullet) => {
+      enemies.forEach((enemy) => {
+        if (bullet.isCollided(enemy)) {
+          this.objects.splice(this.objects.indexOf(bullet), 1);
+          this.objects.splice(this.objects.indexOf(enemy), 1);
+        }
+      });
     });
   }
 }

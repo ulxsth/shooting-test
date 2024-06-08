@@ -32,6 +32,7 @@ import { handleKeyUp } from "./src/events/handleKeyUp.js";
 import { handleMouseClick } from "./src/events/handleMouseDown.js";
 import { handleMouseUp } from "./src/events/handleMouseUp.js";
 import { GameState } from "./src/states/GameState.js";
+import { EnemyObject } from "./src/objects/EnemyObject.js";
 
 const canvas = document.getElementById("mainCanvas");
 const ctx = canvas.getContext("2d");
@@ -48,6 +49,7 @@ function draw() {
   // 状態更新
   gameState.updatePlayerPosition();
   gameState.updateBulletsPosition();
+  gameState.checkBulletCollision();
 
   // 描画
   gameState.objects.forEach((obj) => {
@@ -71,6 +73,10 @@ function init() {
   const center = getCenterOfCanvas();
   player.x = center.x;
   player.y = center.y;
+
+  // fot test: 敵オブジェクトを追加
+  const enemy = new EnemyObject(center.x, center.y + 50);
+  gameState.objects.push(enemy);
 
   // イベント登録
   document.addEventListener("keydown", handleKeyDown);
