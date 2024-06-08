@@ -116,27 +116,4 @@ export class GameState {
       });
     });
   }
-
-  /**
-   * 任意の2つのオブジェクトに重なっている部分があるかを検査する。
-   * @param {Object} obj1
-   * @param {Object} obj2
-   * @returns {boolean}
-   */
-  isCollided = (obj1, obj2) => {
-    // 長方形を (x..x+w), (y..y+h) のふたつの範囲として捉え、
-    // 2つのオブジェクトのそれぞれの範囲が重なっているかを考える
-    
-    const isXOverlapped = obj1.x < (obj2.x + obj2.width) &&
-                           (obj1.x + obj1.width) > obj2.x ||
-                           obj2.x < (obj1.x + obj1.width) &&
-                           (obj2.x + obj2.width) > obj1.x;
-
-    const isYOverlapped = obj1.y < (obj2.y + obj2.height) &&
-                           (obj1.y + obj1.height) > obj2.y ||
-                           obj2.y < (obj1.y + obj1.height) &&
-                           (obj2.y + obj2.height) > obj1.y;
-                           
-    return isXOverlapped && isYOverlapped;
-  };
 }
