@@ -68,7 +68,7 @@ export class GameState {
    */
   shoot(direction) {
     const player = this.getPlayerObj();
-    const bullet = new PlayerBullet(player.x, player.y, direction);
+    const bullet = new PlayerBullet(player.x, player.y, direction, 10);
     this.objects.push(bullet);
   }
 
@@ -104,6 +104,18 @@ export class GameState {
   getAllEnemyObjects = () => this.objects.filter((obj) => obj instanceof EnemyObject);
 
   /**
+   * 敵オブジェクトの状態を更新する
+   */
+  updateEnemyObjects() {
+    const enemies = this.getAllEnemyObjects();
+    enemies.forEach((enemy) => {
+      if (enemy.hp <= 0) {
+        this.objects.splice(this.objects.indexOf(enemy), 1);
+      }
+    });
+  }
+
+  /**
    * PlayerBulletとの衝突判定を行う
    */
   checkBulletCollision() {
@@ -111,11 +123,11 @@ export class GameState {
     const enemies = this.getAllEnemyObjects();
 
     // TODO: O(N^2) なので、パフォーマンスを改善する
-    bullets.forEach((bullet) => {
+    bullets.forEach((bullet, index) => {
       enemies.forEach((enemy) => {
         if (bullet.isCollided(enemy)) {
           this.objects.splice(this.objects.indexOf(bullet), 1);
-          this.objects.splice(this.objects.indexOf(enemy), 1);
+          enemy.damage(bullet.damage);
         }
       });
     });

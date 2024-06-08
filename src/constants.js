@@ -11,3 +11,4 @@ export const PLAYER_BULLET_COLOR = "blue";
 export const ENEMY_WIDTH = 20;
 export const ENEMY_HEIGHT = 20;
 export const ENEMY_COLOR = "red";
+export const ENEMY_HP = 50;
