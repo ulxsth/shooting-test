@@ -37,9 +37,6 @@ import { EnemyObject } from "./src/objects/EnemyObject.js";
 const canvas = document.getElementById("mainCanvas");
 const ctx = canvas.getContext("2d");
 
-export const canvasWidth = canvas.width;
-export const canvasHeight = canvas.height;
-
 export const gameState = new GameState();
 
 /**
@@ -95,6 +92,10 @@ function init() {
 
 function getCenterOfCanvas() {
   return { x: canvas.width / 2, y: canvas.height / 2 };
+}
+
+export function getCanvasSize() {
+  return { width: canvas.width, height: canvas.height };
 }
 
 init();
