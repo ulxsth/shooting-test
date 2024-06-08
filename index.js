@@ -49,6 +49,7 @@ function draw() {
   // 状態更新
   gameState.updatePlayerPosition();
   gameState.updateBulletsPosition();
+  gameState.checkBulletCollision();
 
   // 描画
   gameState.objects.forEach((obj) => {

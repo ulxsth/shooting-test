@@ -75,14 +75,14 @@ export class GameState {
    * プレイヤーの弾を取得する
    * @returns {Object[]}
    */
-  getPlayerBullets = () =>
+  getAllPlayerBullets = () =>
     this.objects.filter((obj) => obj instanceof PlayerBullet);
 
   /**
    * 弾の位置を更新する
    */
   updateBulletsPosition() {
-    const bullets = this.getPlayerBullets();
+    const bullets = this.getAllPlayerBullets();
 
     bullets.forEach((bullet) => {
       bullet.updatePosition();
@@ -100,19 +100,22 @@ export class GameState {
    * 敵オブジェクトを取得する
    * @returns {Object[]}
    */
-  getEnemyObjects = () => this.objects.filter((obj) => obj instanceof EnemyObject);
+  getAllEnemyObjects = () => this.objects.filter((obj) => obj instanceof EnemyObject);
 
   /**
    * PlayerBulletとの衝突判定を行う
    */
   checkBulletCollision() {
-    const bullets = this.getPlayerBullets();
-    const enemies = this.getEnemyObjects();
+    const bullets = this.getAllPlayerBullets();
+    const enemies = this.getAllEnemyObjects();
 
     // TODO: O(N^2) なので、パフォーマンスを改善する
     bullets.forEach((bullet) => {
       enemies.forEach((enemy) => {
-        
+        if (bullet.isCollided(enemy)) {
+          this.objects.splice(this.objects.indexOf(bullet), 1);
+          this.objects.splice(this.objects.indexOf(enemy), 1);
+        }
       });
     });
   }
