@@ -48,7 +48,7 @@ export class GameState {
   // プレイヤー関連
   /**
    * プレイヤーを取得する
-   * @returns {Object}
+   * @returns {PlayerShip}
    */
   getPlayerObj = () => this.objects.find((obj) => obj instanceof PlayerShip);
 
@@ -74,7 +74,7 @@ export class GameState {
 
   /**
    * プレイヤーの弾を取得する
-   * @returns {Object[]}
+   * @returns {PlayerBullet[]}
    */
   getAllPlayerBullets = () =>
     this.objects.filter((obj) => obj instanceof PlayerBullet);
@@ -89,6 +89,7 @@ export class GameState {
       bullet.updatePosition();
 
       // 画面外に出た弾をobjectsから削除
+      // TODO: 全方向に確認する
       // TODO: 計算量が O(N) （Nはすべてのオブジェクト数）なので、パフォーマンスを改善する
       if (bullet.y < 0) {
         this.objects.splice(this.objects.indexOf(bullet), 1);
@@ -99,7 +100,7 @@ export class GameState {
   // 敵オブジェクト関連
   /**
    * 敵オブジェクトを取得する
-   * @returns {Object[]}
+   * @returns {EnemyObject[]}
    */
   getAllEnemyObjects = () => this.objects.filter((obj) => obj instanceof EnemyObject);
 
@@ -123,7 +124,7 @@ export class GameState {
     const enemies = this.getAllEnemyObjects();
 
     // TODO: O(N^2) なので、パフォーマンスを改善する
-    bullets.forEach((bullet, index) => {
+    bullets.forEach((bullet) => {
       enemies.forEach((enemy) => {
         if (bullet.isCollided(enemy)) {
           this.objects.splice(this.objects.indexOf(bullet), 1);

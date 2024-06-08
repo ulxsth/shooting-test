@@ -94,4 +94,8 @@ function getCenterOfCanvas() {
   return { x: canvas.width / 2, y: canvas.height / 2 };
 }
 
+export function getCanvasSize() {
+  return { width: canvas.width, height: canvas.height };
+}
+
 init();
