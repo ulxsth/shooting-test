@@ -64,10 +64,11 @@ export class GameState {
   // 弾関連
   /**
    * 射撃処理
+   * @param {number} direction 射撃方向（ラジアン角度で指定）
    */
-  shoot() {
+  shoot(direction) {
     const player = this.getPlayerObj();
-    const bullet = new PlayerBullet(player.x, player.y);
+    const bullet = new PlayerBullet(player.x, player.y, direction);
     this.objects.push(bullet);
   }
 
