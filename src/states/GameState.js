@@ -68,7 +68,7 @@ export class GameState {
    */
   shoot(direction) {
     const player = this.getPlayerObj();
-    const bullet = new PlayerBullet(player.x, player.y, direction);
+    const bullet = new PlayerBullet(player.x, player.y, direction, 10);
     this.objects.push(bullet);
   }
 
@@ -127,7 +127,7 @@ export class GameState {
       enemies.forEach((enemy) => {
         if (bullet.isCollided(enemy)) {
           this.objects.splice(this.objects.indexOf(bullet), 1);
-          enemy.damage(10);
+          enemy.damage(bullet.damage);
         }
       });
     });
