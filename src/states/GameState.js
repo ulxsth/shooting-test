@@ -111,11 +111,11 @@ export class GameState {
     const enemies = this.getAllEnemyObjects();
 
     // TODO: O(N^2) なので、パフォーマンスを改善する
-    bullets.forEach((bullet) => {
+    bullets.forEach((bullet, index) => {
       enemies.forEach((enemy) => {
         if (bullet.isCollided(enemy)) {
           this.objects.splice(this.objects.indexOf(bullet), 1);
-          this.objects.splice(this.objects.indexOf(enemy), 1);
+          enemy.damage(10);
         }
       });
     });

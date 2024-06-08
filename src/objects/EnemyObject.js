@@ -11,7 +11,7 @@ export class EnemyObject extends GameObject {
    * ダメージを受ける
    * @param {number} damage
    */
-  takeDamage(damage) {
+  damage(damage) {
     this.hp -= damage;
   }
 }
