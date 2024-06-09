@@ -17,6 +17,9 @@ export class GameState {
       leftClick: false,
       rightClick: false,
     };
+
+    this.mouseX = 0;
+    this.mouseY = 0;
   }
 
   /**

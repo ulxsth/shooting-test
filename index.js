@@ -31,6 +31,7 @@ import { handleKeyDown } from "./src/events/handleKeyDown.js";
 import { handleKeyUp } from "./src/events/handleKeyUp.js";
 import { handleMouseClick } from "./src/events/handleMouseDown.js";
 import { handleMouseUp } from "./src/events/handleMouseUp.js";
+import { handleMouseMove } from "./src/events/handleMouseMove.js";
 import { GameState } from "./src/states/GameState.js";
 import { EnemyObject } from "./src/objects/EnemyObject.js";
 
@@ -80,6 +81,7 @@ function init() {
   gameState.objects.push(enemy);
 
   // イベント登録
+  document.addEventListener("mousemove", handleMouseMove);
   document.addEventListener("keydown", handleKeyDown);
   document.addEventListener("keyup", handleKeyUp);
   document.addEventListener("click", handleClick);
