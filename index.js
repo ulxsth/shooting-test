@@ -35,11 +35,13 @@ import { handleMouseMove } from "./src/events/handleMouseMove.js";
 import { GameState } from "./src/states/GameState.js";
 import { PlayerShip } from "./src/objects/PlayerShip.js";
 import { EnemyObject } from "./src/objects/EnemyObject.js";
+import { InteractionState } from "./src/states/InteractionState.js";
 
 const canvas = document.getElementById("mainCanvas");
 const ctx = canvas.getContext("2d");
 
 export const gameState = new GameState();
+export const interactionState = new InteractionState();
 export let mouseX = 0;
 export let mouseY = 0;
 

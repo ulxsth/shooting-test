@@ -2,21 +2,13 @@ import { PlayerShip } from "../objects/PlayerShip.js";
 import { PlayerBullet } from "../objects/PlayerBullet.js";
 import { EnemyObject } from "../objects/EnemyObject.js";
 
+import { interactionState } from "../../index.js";
+
 export class GameState {
   constructor() {
     this.objects = [
       new PlayerShip(0, 0),
     ];
-
-    // TODO: ビットフラグ形式にリファクタ
-    this.interactFlags = {
-      up: false,
-      down: false,
-      left: false,
-      right: false,
-      leftClick: false,
-      rightClick: false,
-    };
   }
 
   /**
@@ -25,32 +17,6 @@ export class GameState {
    */
   registerObject(obj) {
     this.objects.push(obj);
-  }
-
-  /**
-   * 特定のフラグが立っているかどうかを取得する。
-   * @param {string} name フラグ名
-   * @returns {boolean} フラグの値
-   */
-  isFlag(name) {
-    if (this.interactFlags.hasOwnProperty(name)) {
-      return this.interactFlags[name];
-    } else {
-      throw new Error(`Invalid flag name: ${name}`);
-    }
-  }
-
-  /**
-   * フラグを更新する。
-   * @param {string} flag フラグ名
-   * @param {boolean} value フラグの値
-   */
-  setFlag(flag, value) {
-    if (this.interactFlags.hasOwnProperty(flag)) {
-      this.interactFlags[flag] = value;
-    } else {
-      throw new Error(`Invalid flag name: ${flag}`);
-    }
   }
 
   /**
@@ -76,7 +42,7 @@ export class GameState {
    */
   updatePlayerPosition = () => {
     const player = this.getFirst(PlayerShip);
-    const flags = this.interactFlags;
+    const flags = interactionState.getAllFlags();
     player.updatePosition(flags);
   };
 
