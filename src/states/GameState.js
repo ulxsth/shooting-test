@@ -20,6 +20,14 @@ export class GameState {
   }
 
   /**
+   * オブジェクトを登録する
+   * @param {Object} obj 登録するオブジェクト
+   */
+  registerObject(obj) {
+    this.objects.push(obj);
+  }
+
+  /**
    * 特定のフラグが立っているかどうかを取得する。
    * @param {string} name フラグ名
    * @returns {boolean} フラグの値
@@ -60,17 +68,6 @@ export class GameState {
     const flags = this.interactFlags;
     player.updatePosition(flags);
   };
-
-  // 弾関連
-  /**
-   * 射撃処理
-   * @param {number} direction 射撃方向（ラジアン角度で指定）
-   */
-  shoot(direction) {
-    const player = this.getPlayerObj();
-    const bullet = new PlayerBullet(player.x, player.y, direction, 10);
-    this.objects.push(bullet);
-  }
 
   /**
    * プレイヤーの弾を取得する

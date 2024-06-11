@@ -9,6 +9,6 @@ export const handleClick = (event) => {
 
   console.log("click: " + event.button);
   if (event.button === 0) {
-    gameState.shoot(Math.atan2(clickY - playerY, clickX - playerX));
+    player.shoot(Math.atan2(clickY - playerY, clickX - playerX));
   }
 }
