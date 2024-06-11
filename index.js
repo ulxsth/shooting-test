@@ -106,4 +106,9 @@ export function getMousePosition() {
   return { mouseX, mouseY };
 }
 
+export function setMousePosition(x, y) {
+  mouseX = x;
+  mouseY = y;
+}
+
 init();

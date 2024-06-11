@@ -6,7 +6,7 @@ import {
   PLAYER_SPEED,
   PLAYER_SHOOT_INTERVAL,
 } from "../constants.js";
-import { getCanvasSize } from "../../index.js";
+import { gameState, getCanvasSize, getMousePosition } from "../../index.js";
 
 export class PlayerShip extends GameObject {
   constructor(x, y) {
@@ -32,7 +32,10 @@ export class PlayerShip extends GameObject {
 
     if(flags.leftClick && this.shootIntervalId === null) {
       this.shootIntervalId = setInterval(() => {
-        console.log("shoot");
+        const { mouseX, mouseY } = getMousePosition();
+        const direction = Math.atan2(mouseY - this.y, mouseX - this.x);
+        gameState.shoot(direction);
+        console.log(mouseX, mouseY, this.x, this.y);
       }, PLAYER_SHOOT_INTERVAL);
     } else if (!flags.leftClick && this.shootIntervalId !== null) {
       clearInterval(this.shootIntervalId);
