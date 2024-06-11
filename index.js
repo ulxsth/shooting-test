@@ -31,6 +31,7 @@ import { handleKeyDown } from "./src/events/handleKeyDown.js";
 import { handleKeyUp } from "./src/events/handleKeyUp.js";
 import { handleMouseClick } from "./src/events/handleMouseDown.js";
 import { handleMouseUp } from "./src/events/handleMouseUp.js";
+import { handleMouseMove } from "./src/events/handleMouseMove.js";
 import { GameState } from "./src/states/GameState.js";
 import { EnemyObject } from "./src/objects/EnemyObject.js";
 
@@ -38,6 +39,8 @@ const canvas = document.getElementById("mainCanvas");
 const ctx = canvas.getContext("2d");
 
 export const gameState = new GameState();
+export let mouseX = 0;
+export let mouseY = 0;
 
 /**
  * 描画
@@ -80,6 +83,7 @@ function init() {
   gameState.objects.push(enemy);
 
   // イベント登録
+  document.addEventListener("mousemove", handleMouseMove);
   document.addEventListener("keydown", handleKeyDown);
   document.addEventListener("keyup", handleKeyUp);
   document.addEventListener("click", handleClick);
@@ -96,6 +100,15 @@ function getCenterOfCanvas() {
 
 export function getCanvasSize() {
   return { width: canvas.width, height: canvas.height };
+}
+
+export function getMousePosition() {
+  return { mouseX, mouseY };
+}
+
+export function setMousePosition(x, y) {
+  mouseX = x;
+  mouseY = y;
 }
 
 init();
