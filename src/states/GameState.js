@@ -53,34 +53,38 @@ export class GameState {
     }
   }
 
-  // プレイヤー関連
   /**
-   * プレイヤーを取得する
-   * @returns {PlayerShip}
+   * 特定のクラスオブジェクトのうち、最初のオブジェクトを取得する。
+   * @param {Function} classObj 取得するクラスオブジェクト
+   * @returns {Object} 取得したオブジェクト
    */
-  getPlayerObj = () => this.objects.find((obj) => obj instanceof PlayerShip);
+  getFirst(classObj) {
+    return this.objects.find((obj) => obj instanceof classObj);
+  }
+
+  /**
+   * 特定のクラスオブジェクトをすべて取得する。
+   * @param {Function} classObj 取得するクラスオブジェクト
+   * @returns {Object[]} 取得したオブジェクトの配列
+   */
+  getAll(classObj) {
+    return this.objects.filter((obj) => obj instanceof classObj);
+  }
 
   /**
    * プレイヤーの位置を更新する
    */
   updatePlayerPosition = () => {
-    const player = this.getPlayerObj();
+    const player = this.getFirst(PlayerShip);
     const flags = this.interactFlags;
     player.updatePosition(flags);
   };
 
   /**
-   * プレイヤーの弾を取得する
-   * @returns {PlayerBullet[]}
-   */
-  getAllPlayerBullets = () =>
-    this.objects.filter((obj) => obj instanceof PlayerBullet);
-
-  /**
    * 弾の位置を更新する
    */
   updateBulletsPosition() {
-    const bullets = this.getAllPlayerBullets();
+    const bullets = this.getAll(PlayerBullet);
 
     bullets.forEach((bullet) => {
       bullet.updatePosition();
@@ -94,18 +98,11 @@ export class GameState {
     });
   }
 
-  // 敵オブジェクト関連
-  /**
-   * 敵オブジェクトを取得する
-   * @returns {EnemyObject[]}
-   */
-  getAllEnemyObjects = () => this.objects.filter((obj) => obj instanceof EnemyObject);
-
   /**
    * 敵オブジェクトの状態を更新する
    */
   updateEnemyObjects() {
-    const enemies = this.getAllEnemyObjects();
+    const enemies = this.getAll(EnemyObject);
     enemies.forEach((enemy) => {
       if (enemy.hp <= 0) {
         this.objects.splice(this.objects.indexOf(enemy), 1);
@@ -117,8 +114,8 @@ export class GameState {
    * PlayerBulletとの衝突判定を行う
    */
   checkBulletCollision() {
-    const bullets = this.getAllPlayerBullets();
-    const enemies = this.getAllEnemyObjects();
+    const bullets = this.getAll(PlayerBullet);
+    const enemies = this.getAll(EnemyObject);
 
     // TODO: O(N^2) なので、パフォーマンスを改善する
     bullets.forEach((bullet) => {

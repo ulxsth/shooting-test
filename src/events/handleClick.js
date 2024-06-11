@@ -1,7 +1,8 @@
 import { gameState } from "../../index.js";
+import { PlayerShip } from "../objects/PlayerShip.js";
 
 export const handleClick = (event) => {
-  const player = gameState.getPlayerObj();
+  const player = gameState.getFirst(PlayerShip);
   const playerX = player.x;
   const playerY = player.y;
   const clickX = event.clientX;

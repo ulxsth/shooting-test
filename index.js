@@ -33,6 +33,7 @@ import { handleMouseClick } from "./src/events/handleMouseDown.js";
 import { handleMouseUp } from "./src/events/handleMouseUp.js";
 import { handleMouseMove } from "./src/events/handleMouseMove.js";
 import { GameState } from "./src/states/GameState.js";
+import { PlayerShip } from "./src/objects/PlayerShip.js";
 import { EnemyObject } from "./src/objects/EnemyObject.js";
 
 const canvas = document.getElementById("mainCanvas");
@@ -73,7 +74,7 @@ function init() {
   canvas.height = document.documentElement.clientHeight;
 
   // canvas の中心にプレイヤーを配置
-  const player = gameState.getPlayerObj();
+  const player = gameState.getFirst(PlayerShip);
   const center = getCenterOfCanvas();
   player.x = center.x;
   player.y = center.y;
