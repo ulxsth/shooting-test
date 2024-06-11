@@ -39,6 +39,8 @@ const canvas = document.getElementById("mainCanvas");
 const ctx = canvas.getContext("2d");
 
 export const gameState = new GameState();
+export let mouseX = 0;
+export let mouseY = 0;
 
 /**
  * 描画
@@ -98,6 +100,10 @@ function getCenterOfCanvas() {
 
 export function getCanvasSize() {
   return { width: canvas.width, height: canvas.height };
+}
+
+export function getMousePosition() {
+  return { mouseX, mouseY };
 }
 
 init();
