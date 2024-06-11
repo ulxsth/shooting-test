@@ -1,10 +1,10 @@
-import { gameState } from "../../index.js";
+import { interactionState } from "../../index.js";
 
 export const handleMouseClick = (event) => {
   console.log("mousedown: " + event.button);
   if (event.button === 0) {
-    gameState.setFlag("leftClick", true);
+    interactionState.setFlag("leftClick", true);
   } else if (event.button === 2) {
-    gameState.setFlag("rightClick", true);
+    interactionState.setFlag("rightClick", true);
   }
 }

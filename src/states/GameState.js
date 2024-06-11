@@ -2,88 +2,55 @@ import { PlayerShip } from "../objects/PlayerShip.js";
 import { PlayerBullet } from "../objects/PlayerBullet.js";
 import { EnemyObject } from "../objects/EnemyObject.js";
 
+import { interactionState } from "../../index.js";
+
 export class GameState {
   constructor() {
     this.objects = [
       new PlayerShip(0, 0),
     ];
-
-    // TODO: ビットフラグ形式にリファクタ
-    this.interactFlags = {
-      up: false,
-      down: false,
-      left: false,
-      right: false,
-      leftClick: false,
-      rightClick: false,
-    };
   }
 
   /**
-   * 特定のフラグが立っているかどうかを取得する。
-   * @param {string} name フラグ名
-   * @returns {boolean} フラグの値
+   * オブジェクトを登録する
+   * @param {Object} obj 登録するオブジェクト
    */
-  isFlag(name) {
-    if (this.interactFlags.hasOwnProperty(name)) {
-      return this.interactFlags[name];
-    } else {
-      throw new Error(`Invalid flag name: ${name}`);
-    }
+  registerObject(obj) {
+    this.objects.push(obj);
   }
 
   /**
-   * フラグを更新する。
-   * @param {string} flag フラグ名
-   * @param {boolean} value フラグの値
+   * 特定のクラスオブジェクトのうち、最初のオブジェクトを取得する。
+   * @param {Function} classObj 取得するクラスオブジェクト
+   * @returns {Object} 取得したオブジェクト
    */
-  setFlag(flag, value) {
-    if (this.interactFlags.hasOwnProperty(flag)) {
-      this.interactFlags[flag] = value;
-    } else {
-      throw new Error(`Invalid flag name: ${flag}`);
-    }
+  getFirst(classObj) {
+    return this.objects.find((obj) => obj instanceof classObj);
   }
 
-  // プレイヤー関連
   /**
-   * プレイヤーを取得する
-   * @returns {PlayerShip}
+   * 特定のクラスオブジェクトをすべて取得する。
+   * @param {Function} classObj 取得するクラスオブジェクト
+   * @returns {Object[]} 取得したオブジェクトの配列
    */
-  getPlayerObj = () => this.objects.find((obj) => obj instanceof PlayerShip);
+  getAll(classObj) {
+    return this.objects.filter((obj) => obj instanceof classObj);
+  }
 
   /**
    * プレイヤーの位置を更新する
    */
   updatePlayerPosition = () => {
-    const player = this.getPlayerObj();
-    const flags = this.interactFlags;
+    const player = this.getFirst(PlayerShip);
+    const flags = interactionState.getAllFlags();
     player.updatePosition(flags);
   };
-
-  // 弾関連
-  /**
-   * 射撃処理
-   * @param {number} direction 射撃方向（ラジアン角度で指定）
-   */
-  shoot(direction) {
-    const player = this.getPlayerObj();
-    const bullet = new PlayerBullet(player.x, player.y, direction, 10);
-    this.objects.push(bullet);
-  }
-
-  /**
-   * プレイヤーの弾を取得する
-   * @returns {PlayerBullet[]}
-   */
-  getAllPlayerBullets = () =>
-    this.objects.filter((obj) => obj instanceof PlayerBullet);
 
   /**
    * 弾の位置を更新する
    */
   updateBulletsPosition() {
-    const bullets = this.getAllPlayerBullets();
+    const bullets = this.getAll(PlayerBullet);
 
     bullets.forEach((bullet) => {
       bullet.updatePosition();
@@ -97,18 +64,11 @@ export class GameState {
     });
   }
 
-  // 敵オブジェクト関連
-  /**
-   * 敵オブジェクトを取得する
-   * @returns {EnemyObject[]}
-   */
-  getAllEnemyObjects = () => this.objects.filter((obj) => obj instanceof EnemyObject);
-
   /**
    * 敵オブジェクトの状態を更新する
    */
   updateEnemyObjects() {
-    const enemies = this.getAllEnemyObjects();
+    const enemies = this.getAll(EnemyObject);
     enemies.forEach((enemy) => {
       if (enemy.hp <= 0) {
         this.objects.splice(this.objects.indexOf(enemy), 1);
@@ -120,8 +80,8 @@ export class GameState {
    * PlayerBulletとの衝突判定を行う
    */
   checkBulletCollision() {
-    const bullets = this.getAllPlayerBullets();
-    const enemies = this.getAllEnemyObjects();
+    const bullets = this.getAll(PlayerBullet);
+    const enemies = this.getAll(EnemyObject);
 
     // TODO: O(N^2) なので、パフォーマンスを改善する
     bullets.forEach((bullet) => {

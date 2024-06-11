@@ -7,11 +7,21 @@ import {
   PLAYER_SHOOT_INTERVAL,
 } from "../constants.js";
 import { gameState, getCanvasSize, getMousePosition } from "../../index.js";
+import { PlayerBullet } from "./PlayerBullet.js";
 
 export class PlayerShip extends GameObject {
   constructor(x, y) {
     super(x, y, PLAYER_SHIP_WIDTH, PLAYER_SHIP_HEIGHT, PLAYER_SHIP_COLOR);
     this.shootIntervalId = null;
+  }
+
+  /**
+   * 射撃処理
+   * @param {number} direction 射撃方向（ラジアン角度で指定）
+   */
+  shoot(direction) {
+    const bullet = new PlayerBullet(this.x, this.y, direction, 10);
+    gameState.registerObject(bullet);
   }
 
   updatePosition(flags) {
@@ -34,7 +44,7 @@ export class PlayerShip extends GameObject {
       this.shootIntervalId = setInterval(() => {
         const { mouseX, mouseY } = getMousePosition();
         const direction = Math.atan2(mouseY - this.y, mouseX - this.x);
-        gameState.shoot(direction);
+        this.shoot(direction);
         console.log(mouseX, mouseY, this.x, this.y);
       }, PLAYER_SHOOT_INTERVAL);
     } else if (!flags.leftClick && this.shootIntervalId !== null) {
