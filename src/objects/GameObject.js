@@ -5,6 +5,7 @@ export class GameObject {
     this.width = width;
     this.height = height;
     this.color = color;
+    this.direction = 0;
   }
 
   updatePosition() {
