@@ -2,7 +2,7 @@ import { PlayerShip } from "../objects/PlayerShip.js";
 import { PlayerBullet } from "../objects/PlayerBullet.js";
 import { EnemyObject } from "../objects/EnemyObject.js";
 
-import { interactionState } from "../../index.js";
+import { getCanvasSize, interactionState } from "../../index.js";
 
 export class GameState {
   constructor() {
@@ -58,7 +58,9 @@ export class GameState {
       // 画面外に出た弾をobjectsから削除
       // TODO: 全方向に確認する
       // TODO: 計算量が O(N) （Nはすべてのオブジェクト数）なので、パフォーマンスを改善する
-      if (bullet.y < 0) {
+      const { width, height } = getCanvasSize();
+      if (bullet.x < 0 || bullet.x > width ||
+        bullet.y < 0 || bullet.y > height) {
         this.objects.splice(this.objects.indexOf(bullet), 1);
       }
     });
