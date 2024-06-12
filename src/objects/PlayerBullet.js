@@ -2,15 +2,16 @@ import { PLAYER_BULLET_SPEED, PLAYER_BULLET_WIDTH, PLAYER_BULLET_HEIGHT, PLAYER_
 import { GameObject } from "./GameObject.js";
 
 export class PlayerBullet extends GameObject {
-  constructor(x, y, direction, damage) {
+  constructor(x, y, direction, damage, speed) {
     super(x, y, PLAYER_BULLET_WIDTH, PLAYER_BULLET_HEIGHT, PLAYER_BULLET_COLOR);
     this.direction = direction;
     this.damage = damage;
+    this.speed = speed;
   }
 
   updatePosition() {
-    this.x += PLAYER_BULLET_SPEED * Math.cos(this.direction);
-    this.y += PLAYER_BULLET_SPEED * Math.sin(this.direction);
+    this.x += this.speed * Math.cos(this.direction);
+    this.y += this.speed * Math.sin(this.direction);
   }
 }
 

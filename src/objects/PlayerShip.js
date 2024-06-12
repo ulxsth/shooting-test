@@ -8,7 +8,7 @@ import {
 } from "../constants.js";
 import { gameState, getCanvasSize, getMousePosition } from "../../index.js";
 import { PlayerBullet } from "./PlayerBullet.js";
-import { PLAYER_BULLET_DAMAGE } from "../constants.js";
+import { PLAYER_BULLET_DAMAGE, PLAYER_BULLET_SPEED } from "../constants.js";
 
 export class PlayerShip extends GameObject {
   constructor(x, y) {
@@ -21,7 +21,7 @@ export class PlayerShip extends GameObject {
    * @param {number} direction 射撃方向（ラジアン角度で指定）
    */
   shoot(direction) {
-    const bullet = new PlayerBullet(this.x, this.y, direction, PLAYER_BULLET_DAMAGE);
+    const bullet = new PlayerBullet(this.x, this.y, direction, PLAYER_BULLET_DAMAGE, PLAYER_BULLET_SPEED);
     gameState.registerObject(bullet);
   }
 
