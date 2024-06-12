@@ -1,6 +1,7 @@
 import { ENEMY_WIDTH, ENEMY_HEIGHT, ENEMY_COLOR, ENEMY_HP } from "../constants.js";
 import { gameState } from "../../index.js";
 import { GameObject } from "./GameObject.js";
+import { EnemyBullet } from "./EnemyBullet.js";
 
 export class EnemyObject extends GameObject {
   constructor(x, y) {

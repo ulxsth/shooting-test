@@ -54,9 +54,9 @@ function draw() {
 
   // 状態更新
   gameState.updatePlayerPosition();
-  gameState.updateEnemyObjects();
   gameState.updateBulletsPosition();
   gameState.checkBulletCollision();
+  gameState.updateEnemyObjects();
 
   // 描画
   const objects = gameState.objects;

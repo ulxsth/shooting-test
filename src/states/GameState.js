@@ -45,7 +45,7 @@ export class GameState {
     const player = this.getFirst(PlayerShip);
     const flags = interactionState.getAllFlags();
     player.updatePosition(flags);
-  };
+  }
 
   /**
    * 敵の状態を更新する
@@ -60,7 +60,7 @@ export class GameState {
   /**
    * 弾の位置を更新する
    */
-  updateBulletsPosition() {
+  updateBulletsPosition = () => {
     const bullets = this.getAll(Bullet);
 
     bullets.forEach((bullet) => {
@@ -72,18 +72,6 @@ export class GameState {
       if (bullet.x < 0 || bullet.x > width ||
         bullet.y < 0 || bullet.y > height) {
         this.objects.splice(this.objects.indexOf(bullet), 1);
-      }
-    });
-  }
-
-  /**
-   * 敵オブジェクトの状態を更新する
-   */
-  updateEnemyObjects() {
-    const enemies = this.getAll(EnemyObject);
-    enemies.forEach((enemy) => {
-      if (enemy.hp <= 0) {
-        this.objects.splice(this.objects.indexOf(enemy), 1);
       }
     });
   }
