@@ -17,10 +17,9 @@ export class PlayerShip extends GameObject {
 
   /**
    * 射撃処理
-   * @param {number} direction 射撃方向（ラジアン角度で指定）
    */
-  shoot(direction) {
-    const bullet = new PlayerBullet(this.x, this.y, direction);
+  shoot() {
+    const bullet = new PlayerBullet(this.x, this.y, this.direction);
     gameState.registerObject(bullet);
   }
 
