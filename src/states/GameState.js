@@ -18,6 +18,14 @@ export class GameState {
   }
 
   /**
+   * オブジェクトを削除する
+   * @param {Object} obj 削除するオブジェクト
+   */
+  removeObject(obj) {
+    this.objects.splice(this.objects.indexOf(obj), 1);
+  }
+
+  /**
    * 特定のクラスオブジェクトのうち、最初のオブジェクトを取得する。
    * @param {Function} classObj 取得するクラスオブジェクト
    * @returns {Object} 取得したオブジェクト
@@ -41,24 +49,6 @@ export class GameState {
   update() {
     this.objects.forEach((obj) => {
       obj.update();
-    });
-  }
-
-  /**
-   * PlayerBulletとの衝突判定を行う
-   */
-  checkBulletCollision() {
-    const bullets = this.getAll(PlayerBullet);
-    const enemies = this.getAll(EnemyObject);
-
-    // TODO: O(N^2) なので、パフォーマンスを改善する
-    bullets.forEach((bullet) => {
-      enemies.forEach((enemy) => {
-        if (bullet.isCollided(enemy)) {
-          this.objects.splice(this.objects.indexOf(bullet), 1);
-          enemy.damage(bullet.damage);
-        }
-      });
     });
   }
 }

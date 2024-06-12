@@ -19,12 +19,12 @@ export class PlayerShip extends GameObject {
    * 射撃処理
    */
   shoot() {
-    this.updateDirection();
     const bullet = new PlayerBullet(this.x, this.y, this.direction);
     gameState.registerObject(bullet);
   }
-
+  
   update() {
+    this.updateDirection();
     const { width: canvasWidth, height: canvasHeight } = getCanvasSize();
     const flags = interactionState.getAllFlags();
 
