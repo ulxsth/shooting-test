@@ -53,7 +53,12 @@ export class GameState {
   updateEnemyObjects() {
     const enemies = this.getAll(EnemyObject);
     enemies.forEach((enemy) => {
-      enemy.update();
+      if (enemy.hp <= 0) {
+        clearInterval(enemy.shootIntervalId);
+        this.objects.splice(this.objects.indexOf(enemy), 1);
+      } else {
+        enemy.update();
+      }
     });
   }
 

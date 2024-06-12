@@ -14,6 +14,7 @@ export const ENEMY_WIDTH = 20;
 export const ENEMY_HEIGHT = 20;
 export const ENEMY_COLOR = "red";
 export const ENEMY_HP = 50;
+export const ENEMY_SHOOT_INTERVAL = 1000;
 
 export const ENEMY_BULLET_WIDTH = 10;
 export const ENEMY_BULLET_HEIGHT = 10;
