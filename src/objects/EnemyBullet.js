@@ -12,10 +12,10 @@ export class EnemyBullet extends Bullet {
     super(
       x,
       y,
-      direction,
       ENEMY_BULLET_WIDTH,
       ENEMY_BULLET_HEIGHT,
       ENEMY_BULLET_COLOR,
+      direction,
       ENEMY_BULLET_DAMAGE,
       ENEMY_BULLET_SPEED
     );
