@@ -17,10 +17,10 @@ export class PlayerShip extends GameObject {
 
   /**
    * 射撃処理
-   * @param {number} direction 射撃方向（ラジアン角度で指定）
    */
-  shoot(direction) {
-    const bullet = new PlayerBullet(this.x, this.y, direction);
+  shoot() {
+    this.updateDirection();
+    const bullet = new PlayerBullet(this.x, this.y, this.direction);
     gameState.registerObject(bullet);
   }
 
@@ -43,14 +43,19 @@ export class PlayerShip extends GameObject {
     // TODO: updatePosition で射撃処理してるのおかしくない？
     if(flags.leftClick && this.shootIntervalId === null) {
       this.shootIntervalId = setInterval(() => {
-        const { mouseX, mouseY } = getMousePosition();
-        const direction = Math.atan2(mouseY - this.y, mouseX - this.x);
-        this.shoot(direction);
-        console.log(mouseX, mouseY, this.x, this.y);
+        this.shoot();
       }, PLAYER_SHOOT_INTERVAL);
     } else if (!flags.leftClick && this.shootIntervalId !== null) {
       clearInterval(this.shootIntervalId);
       this.shootIntervalId = null;
     }
+  }
+
+  /**
+   * マウスの位置を取得し、プレイヤーの方向を更新
+   */
+  updateDirection() {
+    const { mouseX, mouseY } = getMousePosition();
+    this.direction = Math.atan2(mouseY - this.y, mouseX - this.x);
   }
 }
