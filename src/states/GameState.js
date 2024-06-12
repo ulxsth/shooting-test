@@ -56,7 +56,6 @@ export class GameState {
       bullet.updatePosition();
 
       // 画面外に出た弾をobjectsから削除
-      // TODO: 全方向に確認する
       // TODO: 計算量が O(N) （Nはすべてのオブジェクト数）なので、パフォーマンスを改善する
       const { width, height } = getCanvasSize();
       if (bullet.x < 0 || bullet.x > width ||
