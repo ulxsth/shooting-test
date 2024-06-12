@@ -8,7 +8,7 @@ export class GameObject {
     this.direction = 0;
   }
 
-  updatePosition() {
+  update() {
     throw new Error("This method is not implemented");
   }
 

@@ -44,7 +44,7 @@ export class GameState {
   updatePlayerPosition = () => {
     const player = this.getFirst(PlayerShip);
     const flags = interactionState.getAllFlags();
-    player.updatePosition(flags);
+    player.update(flags);
   }
 
   /**
@@ -69,7 +69,7 @@ export class GameState {
     const bullets = this.getAll(Bullet);
 
     bullets.forEach((bullet) => {
-      bullet.updatePosition();
+      bullet.update();
 
       // 画面外に出た弾をobjectsから削除
       // TODO: 計算量が O(N) （Nはすべてのオブジェクト数）なので、パフォーマンスを改善する

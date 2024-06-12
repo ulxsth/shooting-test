@@ -8,7 +8,7 @@ export class Bullet extends GameObject {
     this.speed = speed;
   }
 
-  updatePosition() {
+  update() {
     this.x += this.speed * Math.cos(this.direction);
     this.y += this.speed * Math.sin(this.direction);
   }

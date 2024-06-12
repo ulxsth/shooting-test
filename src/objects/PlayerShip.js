@@ -6,7 +6,7 @@ import {
   PLAYER_SPEED,
   PLAYER_SHOOT_INTERVAL,
 } from "../constants.js";
-import { gameState, getCanvasSize, getMousePosition } from "../../index.js";
+import { gameState, getCanvasSize, getMousePosition, interactionState } from "../../index.js";
 import { PlayerBullet } from "./PlayerBullet.js";
 
 export class PlayerShip extends GameObject {
@@ -24,8 +24,9 @@ export class PlayerShip extends GameObject {
     gameState.registerObject(bullet);
   }
 
-  updatePosition(flags) {
+  update() {
     const { width: canvasWidth, height: canvasHeight } = getCanvasSize();
+    const flags = interactionState.getAllFlags();
 
     if (flags.up && this.y - PLAYER_SPEED >= 0) {
       this.y -= PLAYER_SPEED;
