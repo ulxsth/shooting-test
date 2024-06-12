@@ -1,16 +1,23 @@
-import { PLAYER_BULLET_SPEED, PLAYER_BULLET_WIDTH, PLAYER_BULLET_HEIGHT, PLAYER_BULLET_COLOR } from "../constants.js";
-import { GameObject } from "./GameObject.js";
+import {
+  PLAYER_BULLET_WIDTH,
+  PLAYER_BULLET_HEIGHT,
+  PLAYER_BULLET_COLOR,
+  PLAYER_BULLET_DAMAGE,
+  PLAYER_BULLET_SPEED,
+} from "../constants.js";
+import { Bullet } from "./Bullet.js";
 
-export class PlayerBullet extends GameObject {
-  constructor(x, y, direction, damage) {
-    super(x, y, PLAYER_BULLET_WIDTH, PLAYER_BULLET_HEIGHT, PLAYER_BULLET_COLOR);
-    this.direction = direction;
-    this.damage = damage;
-  }
-
-  updatePosition() {
-    this.x += PLAYER_BULLET_SPEED * Math.cos(this.direction);
-    this.y += PLAYER_BULLET_SPEED * Math.sin(this.direction);
+export class PlayerBullet extends Bullet {
+  constructor(x, y, direction) {
+    super(
+      x,
+      y,
+      PLAYER_BULLET_WIDTH,
+      PLAYER_BULLET_HEIGHT,
+      PLAYER_BULLET_COLOR,
+      direction,
+      PLAYER_BULLET_DAMAGE,
+      PLAYER_BULLET_SPEED
+    );
   }
 }
-

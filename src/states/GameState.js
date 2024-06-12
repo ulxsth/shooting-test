@@ -3,6 +3,7 @@ import { PlayerBullet } from "../objects/PlayerBullet.js";
 import { EnemyObject } from "../objects/EnemyObject.js";
 
 import { getCanvasSize, interactionState } from "../../index.js";
+import { Bullet } from "../objects/Bullet.js";
 
 export class GameState {
   constructor() {
@@ -44,13 +45,28 @@ export class GameState {
     const player = this.getFirst(PlayerShip);
     const flags = interactionState.getAllFlags();
     player.updatePosition(flags);
-  };
+  }
+
+  /**
+   * 敵の状態を更新する
+   */
+  updateEnemyObjects() {
+    const enemies = this.getAll(EnemyObject);
+    enemies.forEach((enemy) => {
+      if (enemy.hp <= 0) {
+        clearInterval(enemy.shootIntervalId);
+        this.objects.splice(this.objects.indexOf(enemy), 1);
+      } else {
+        enemy.update();
+      }
+    });
+  }
 
   /**
    * 弾の位置を更新する
    */
-  updateBulletsPosition() {
-    const bullets = this.getAll(PlayerBullet);
+  updateBulletsPosition = () => {
+    const bullets = this.getAll(Bullet);
 
     bullets.forEach((bullet) => {
       bullet.updatePosition();
@@ -61,18 +77,6 @@ export class GameState {
       if (bullet.x < 0 || bullet.x > width ||
         bullet.y < 0 || bullet.y > height) {
         this.objects.splice(this.objects.indexOf(bullet), 1);
-      }
-    });
-  }
-
-  /**
-   * 敵オブジェクトの状態を更新する
-   */
-  updateEnemyObjects() {
-    const enemies = this.getAll(EnemyObject);
-    enemies.forEach((enemy) => {
-      if (enemy.hp <= 0) {
-        this.objects.splice(this.objects.indexOf(enemy), 1);
       }
     });
   }

@@ -54,12 +54,13 @@ function draw() {
 
   // 状態更新
   gameState.updatePlayerPosition();
-  gameState.updateEnemyObjects();
   gameState.updateBulletsPosition();
   gameState.checkBulletCollision();
+  gameState.updateEnemyObjects();
 
   // 描画
-  gameState.objects.forEach((obj) => {
+  const objects = gameState.objects;
+  objects.forEach((obj) => {
     ctx.fillStyle = obj.color;
     ctx.fillRect(obj.x, obj.y, obj.width, obj.height);
   });
