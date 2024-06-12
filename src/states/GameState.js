@@ -3,6 +3,7 @@ import { PlayerBullet } from "../objects/PlayerBullet.js";
 import { EnemyObject } from "../objects/EnemyObject.js";
 
 import { getCanvasSize, interactionState } from "../../index.js";
+import { Bullet } from "../objects/Bullet.js";
 
 export class GameState {
   constructor() {
@@ -47,10 +48,20 @@ export class GameState {
   };
 
   /**
+   * 敵の状態を更新する
+   */
+  updateEnemyObjects() {
+    const enemies = this.getAll(EnemyObject);
+    enemies.forEach((enemy) => {
+      enemy.update();
+    });
+  }
+
+  /**
    * 弾の位置を更新する
    */
   updateBulletsPosition() {
-    const bullets = this.getAll(PlayerBullet);
+    const bullets = this.getAll(Bullet);
 
     bullets.forEach((bullet) => {
       bullet.updatePosition();

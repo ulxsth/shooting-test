@@ -8,7 +8,6 @@ import {
 } from "../constants.js";
 import { gameState, getCanvasSize, getMousePosition } from "../../index.js";
 import { PlayerBullet } from "./PlayerBullet.js";
-import { PLAYER_BULLET_DAMAGE, PLAYER_BULLET_SPEED } from "../constants.js";
 
 export class PlayerShip extends GameObject {
   constructor(x, y) {
@@ -41,6 +40,7 @@ export class PlayerShip extends GameObject {
       this.x += PLAYER_SPEED;
     }
 
+    // TODO: updatePosition で射撃処理してるのおかしくない？
     if(flags.leftClick && this.shootIntervalId === null) {
       this.shootIntervalId = setInterval(() => {
         const { mouseX, mouseY } = getMousePosition();
