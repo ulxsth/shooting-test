@@ -6,7 +6,7 @@ import {
   PLAYER_SPEED,
   PLAYER_SHOOT_INTERVAL,
 } from "../constants.js";
-import { gameState, getCanvasSize, getMousePosition } from "../../index.js";
+import { gameState, getCanvasSize, getMousePosition, interactionState } from "../../index.js";
 import { PlayerBullet } from "./PlayerBullet.js";
 
 export class PlayerShip extends GameObject {
@@ -19,13 +19,14 @@ export class PlayerShip extends GameObject {
    * 射撃処理
    */
   shoot() {
-    this.updateDirection();
     const bullet = new PlayerBullet(this.x, this.y, this.direction);
     gameState.registerObject(bullet);
   }
-
-  updatePosition(flags) {
+  
+  update() {
+    this.updateDirection();
     const { width: canvasWidth, height: canvasHeight } = getCanvasSize();
+    const flags = interactionState.getAllFlags();
 
     if (flags.up && this.y - PLAYER_SPEED >= 0) {
       this.y -= PLAYER_SPEED;
@@ -40,7 +41,6 @@ export class PlayerShip extends GameObject {
       this.x += PLAYER_SPEED;
     }
 
-    // TODO: updatePosition で射撃処理してるのおかしくない？
     if(flags.leftClick && this.shootIntervalId === null) {
       this.shootIntervalId = setInterval(() => {
         this.shoot();
