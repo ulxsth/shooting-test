@@ -53,10 +53,7 @@ function draw() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
   // 状態更新
-  gameState.updatePlayerPosition();
-  gameState.updateBulletsPosition();
-  gameState.checkBulletCollision();
-  gameState.updateEnemyObjects();
+  gameState.update();
 
   // 描画
   const objects = gameState.objects;

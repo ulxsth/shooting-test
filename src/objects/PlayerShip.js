@@ -41,7 +41,6 @@ export class PlayerShip extends GameObject {
       this.x += PLAYER_SPEED;
     }
 
-    // TODO: updatePosition で射撃処理してるのおかしくない？
     if(flags.leftClick && this.shootIntervalId === null) {
       this.shootIntervalId = setInterval(() => {
         this.shoot();
