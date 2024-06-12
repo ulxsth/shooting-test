@@ -1,9 +1,8 @@
-import { GameObject } from "./GameObject";
+import { GameObject } from "./GameObject.js";
 
 export class Bullet extends GameObject {
-  constructor(x, y, direction, damage, speed) {
-    this.x = x;
-    this.y = y;
+  constructor(x, y, width, height, color, direction, damage, speed) {
+    super(x, y, width, height, color);
     this.direction = direction;
     this.damage = damage;
     this.speed = speed;
