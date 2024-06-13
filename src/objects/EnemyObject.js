@@ -36,7 +36,14 @@ export class EnemyObject extends Entity {
    * 更新処理
    */
   update() {
-    this.checkBulletCollision();
+    const bullets = gameState.getAll(PlayerBullet);
+    bullets.forEach((bullet) => {
+      if (this.isCollided(bullet)) {
+        gameState.removeObject(bullet);
+        this.damage(bullet.damage);
+      }
+    });
+
     if(this.hp <= 0) {
       clearInterval(this.shootIntervalId);
       gameState.removeObject(this);
@@ -47,24 +54,5 @@ export class EnemyObject extends Entity {
         this.shoot();
       }, ENEMY_SHOOT_INTERVAL);
     }
-  }
-
-
-  /**
-   * PlayerBulletとの衝突判定を行う
-   */
-  checkBulletCollision() {
-    const bullets = gameState.getAll(PlayerBullet);
-    const enemies = gameState.getAll(EnemyObject);
-
-      // TODO: O(N^2) なので、パフォーマンスを改善する
-    bullets.forEach((bullet) => {
-      enemies.forEach((enemy) => {
-        if (bullet.isCollided(enemy)) {
-          gameState.removeObject(bullet);
-          enemy.damage(bullet.damage);
-        }
-      });
-    });
   }
 }

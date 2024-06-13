@@ -10,6 +10,8 @@ import {
 import { gameState, getCanvasSize, getMousePosition, interactionState } from "../../index.js";
 import { PlayerBullet } from "./PlayerBullet.js";
 import { Entity } from "./Entity.js";
+import { EnemyBullet } from "./EnemyBullet.js";
+import { EnemyObject } from "./EnemyObject.js";
 
 export class PlayerShip extends Entity {
   constructor(x, y) {
@@ -30,6 +32,7 @@ export class PlayerShip extends Entity {
     const { width: canvasWidth, height: canvasHeight } = getCanvasSize();
     const flags = interactionState.getAllFlags();
 
+    // 移動
     if (flags.up && this.y - PLAYER_SPEED >= 0) {
       this.y -= PLAYER_SPEED;
     }
@@ -43,6 +46,7 @@ export class PlayerShip extends Entity {
       this.x += PLAYER_SPEED;
     }
 
+    // 射撃
     if(flags.leftClick && this.shootIntervalId === null) {
       this.shootIntervalId = setInterval(() => {
         this.shoot();
@@ -51,6 +55,15 @@ export class PlayerShip extends Entity {
       clearInterval(this.shootIntervalId);
       this.shootIntervalId = null;
     }
+
+    // 衝突判定
+    const bullets = gameState.getAll(EnemyBullet);
+    bullets.forEach((bullet) => {
+      if (this.isCollided(bullet)) {
+        gameState.removeObject(bullet);
+        this.damage(bullet.damage);
+      }
+    });
   }
 
   /**
