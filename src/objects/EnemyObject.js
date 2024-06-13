@@ -6,15 +6,13 @@ import {
   ENEMY_SHOOT_INTERVAL,
 } from "../constants.js";
 import { gameState } from "../../index.js";
-import { GameObject } from "./GameObject.js";
 import { PlayerBullet } from "./PlayerBullet.js";
 import { EnemyBullet } from "./EnemyBullet.js";
+import { Entity } from "./Entity.js";
 
-export class EnemyObject extends GameObject {
+export class EnemyObject extends Entity {
   constructor(x, y) {
-    super(x, y, ENEMY_WIDTH, ENEMY_HEIGHT, ENEMY_COLOR, 0);
-    this.hp = ENEMY_HP;
-    this.direction = 0;
+    super(x, y, ENEMY_WIDTH, ENEMY_HEIGHT, ENEMY_COLOR, ENEMY_HP, 0);
     this.shootIntervalId = null;
   }
 
@@ -65,7 +63,6 @@ export class EnemyObject extends GameObject {
         if (bullet.isCollided(enemy)) {
           gameState.removeObject(bullet);
           enemy.damage(bullet.damage);
-          console.log(enemy.hp);
         }
       });
     });

@@ -10,7 +10,7 @@ export class Entity extends GameObject {
   damage(damage) {
     this.hp -= damage;
     if (this.hp <= 0) {
-
+      gameState.removeObject(this);
     }
   }
 }

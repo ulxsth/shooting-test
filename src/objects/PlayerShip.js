@@ -5,13 +5,15 @@ import {
   PLAYER_SHIP_COLOR,
   PLAYER_SPEED,
   PLAYER_SHOOT_INTERVAL,
+  PLAYER_HP,
 } from "../constants.js";
 import { gameState, getCanvasSize, getMousePosition, interactionState } from "../../index.js";
 import { PlayerBullet } from "./PlayerBullet.js";
+import { Entity } from "./Entity.js";
 
-export class PlayerShip extends GameObject {
+export class PlayerShip extends Entity {
   constructor(x, y) {
-    super(x, y, PLAYER_SHIP_WIDTH, PLAYER_SHIP_HEIGHT, PLAYER_SHIP_COLOR, 0);
+    super(x, y, PLAYER_SHIP_WIDTH, PLAYER_SHIP_HEIGHT, PLAYER_SHIP_COLOR, PLAYER_HP, 0);
     this.shootIntervalId = null;
   }
 
