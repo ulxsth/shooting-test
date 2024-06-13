@@ -12,7 +12,7 @@ import { EnemyBullet } from "./EnemyBullet.js";
 
 export class EnemyObject extends GameObject {
   constructor(x, y) {
-    super(x, y, ENEMY_WIDTH, ENEMY_HEIGHT, ENEMY_COLOR);
+    super(x, y, ENEMY_WIDTH, ENEMY_HEIGHT, ENEMY_COLOR, 0);
     this.hp = ENEMY_HP;
     this.direction = 0;
     this.shootIntervalId = null;
@@ -51,14 +51,14 @@ export class EnemyObject extends GameObject {
     }
   }
 
-  
+
   /**
    * PlayerBulletとの衝突判定を行う
    */
   checkBulletCollision() {
     const bullets = gameState.getAll(PlayerBullet);
     const enemies = gameState.getAll(EnemyObject);
-  
+
       // TODO: O(N^2) なので、パフォーマンスを改善する
     bullets.forEach((bullet) => {
       enemies.forEach((enemy) => {

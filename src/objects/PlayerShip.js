@@ -11,7 +11,7 @@ import { PlayerBullet } from "./PlayerBullet.js";
 
 export class PlayerShip extends GameObject {
   constructor(x, y) {
-    super(x, y, PLAYER_SHIP_WIDTH, PLAYER_SHIP_HEIGHT, PLAYER_SHIP_COLOR);
+    super(x, y, PLAYER_SHIP_WIDTH, PLAYER_SHIP_HEIGHT, PLAYER_SHIP_COLOR, 0);
     this.shootIntervalId = null;
   }
 
@@ -22,7 +22,7 @@ export class PlayerShip extends GameObject {
     const bullet = new PlayerBullet(this.x, this.y, this.direction);
     gameState.registerObject(bullet);
   }
-  
+
   update() {
     this.updateDirection();
     const { width: canvasWidth, height: canvasHeight } = getCanvasSize();
