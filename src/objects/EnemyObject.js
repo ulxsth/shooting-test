@@ -6,15 +6,13 @@ import {
   ENEMY_SHOOT_INTERVAL,
 } from "../constants.js";
 import { gameState } from "../../index.js";
-import { GameObject } from "./GameObject.js";
 import { PlayerBullet } from "./PlayerBullet.js";
 import { EnemyBullet } from "./EnemyBullet.js";
+import { Entity } from "./Entity.js";
 
-export class EnemyObject extends GameObject {
+export class EnemyObject extends Entity {
   constructor(x, y) {
-    super(x, y, ENEMY_WIDTH, ENEMY_HEIGHT, ENEMY_COLOR);
-    this.hp = ENEMY_HP;
-    this.direction = 0;
+    super(x, y, ENEMY_WIDTH, ENEMY_HEIGHT, ENEMY_COLOR, ENEMY_HP, 0);
     this.shootIntervalId = null;
   }
 
@@ -38,7 +36,14 @@ export class EnemyObject extends GameObject {
    * 更新処理
    */
   update() {
-    this.checkBulletCollision();
+    const bullets = gameState.getAll(PlayerBullet);
+    bullets.forEach((bullet) => {
+      if (this.isCollided(bullet)) {
+        gameState.removeObject(bullet);
+        this.damage(bullet.damage);
+      }
+    });
+
     if(this.hp <= 0) {
       clearInterval(this.shootIntervalId);
       gameState.removeObject(this);
@@ -49,25 +54,5 @@ export class EnemyObject extends GameObject {
         this.shoot();
       }, ENEMY_SHOOT_INTERVAL);
     }
-  }
-
-  
-  /**
-   * PlayerBulletとの衝突判定を行う
-   */
-  checkBulletCollision() {
-    const bullets = gameState.getAll(PlayerBullet);
-    const enemies = gameState.getAll(EnemyObject);
-  
-      // TODO: O(N^2) なので、パフォーマンスを改善する
-    bullets.forEach((bullet) => {
-      enemies.forEach((enemy) => {
-        if (bullet.isCollided(enemy)) {
-          gameState.removeObject(bullet);
-          enemy.damage(bullet.damage);
-          console.log(enemy.hp);
-        }
-      });
-    });
   }
 }

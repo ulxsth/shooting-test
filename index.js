@@ -24,16 +24,16 @@
 //                     永無BUG大仏
 //
 
-import { handleClick } from "./src/events/handleClick.js";
+import { GameStatusEnum } from "./src/constants.js";
 import { handleContextMenu } from "./src/events/handleContextMenu.js";
 import { handleKeyDown } from "./src/events/handleKeyDown.js";
 import { handleKeyUp } from "./src/events/handleKeyUp.js";
 import { handleMouseClick } from "./src/events/handleMouseDown.js";
-import { handleMouseUp } from "./src/events/handleMouseUp.js";
 import { handleMouseMove } from "./src/events/handleMouseMove.js";
-import { GameState } from "./src/states/GameState.js";
-import { PlayerShip } from "./src/objects/PlayerShip.js";
+import { handleMouseUp } from "./src/events/handleMouseUp.js";
 import { EnemyObject } from "./src/objects/EnemyObject.js";
+import { PlayerShip } from "./src/objects/PlayerShip.js";
+import { GameState } from "./src/states/GameState.js";
 import { InteractionState } from "./src/states/InteractionState.js";
 
 const canvas = document.getElementById("mainCanvas");
@@ -50,6 +50,13 @@ export let mouseY = 0;
 function draw() {
   // リセット
   ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  if (gameState.gameStatus === GameStatusEnum.GAME_OVER) {
+    ctx.font = "48px serif";
+    ctx.fillStyle = "red";
+    ctx.textAlign = "center";
+    ctx.fillText("GAME OVER", canvas.width / 2, canvas.height / 2);
+  }
 
   // 状態更新
   gameState.update();
@@ -86,7 +93,6 @@ function init() {
   document.addEventListener("mousemove", handleMouseMove);
   document.addEventListener("keydown", handleKeyDown);
   document.addEventListener("keyup", handleKeyUp);
-  document.addEventListener("click", handleClick);
   document.addEventListener("mousedown", handleMouseClick);
   document.addEventListener("mouseup", handleMouseUp);
   document.addEventListener("contextmenu", handleContextMenu);

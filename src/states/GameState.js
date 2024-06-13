@@ -1,12 +1,23 @@
 import { PlayerShip } from "../objects/PlayerShip.js";
-import { PlayerBullet } from "../objects/PlayerBullet.js";
-import { EnemyObject } from "../objects/EnemyObject.js";
+import { GameStatusEnum } from "../constants.js";
 
 export class GameState {
   constructor() {
     this.objects = [
       new PlayerShip(0, 0),
     ];
+    this.gameStatus = GameStatusEnum.PLAYING;
+  }
+
+  /**
+   * ゲームの状態を変更する
+   * @param {number} status 変更するゲームの状態（GameStatusEnum）
+   */
+  setGameStatus(status) {
+    if (!Object.values(GameStatusEnum).includes(status)) {
+      throw new Error("Invalid game status");
+    }
+    this.gameStatus = status;
   }
 
   /**
@@ -47,6 +58,10 @@ export class GameState {
    * すべてのオブジェクトの状態を更新する
    */
   update() {
+    if (this.gameStatus === GameStatusEnum.GAME_OVER) {
+      return;
+    }
+
     this.objects.forEach((obj) => {
       obj.update();
     });
