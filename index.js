@@ -1,30 +1,48 @@
+//
+//                       _oo0oo_
+//                      o8888888o
+//                      88" . "88
+//                      (| -_- |)
+//                      0\  =  /0
+//                    ___/`---'\___
+//                  .' \\|     |// '.
+//                 / \\|||  :  |||// \
+//                / _||||| -:- |||||- \
+//               |   | \\\  -  /// |   |
+//               | \_|  ''\---/''  |_/ |
+//               \  .-\__  '-'  ___/-. /
+//             ___'. .'  /--.--\  `. .'___
+//          ."" '<  `.___\_<|>_/___.' >' "".
+//         | | :  `- \`.;`\ _ /`;.`/ - ` : | |
+//         \  \ `_.   \_ __\ /__ _/   .-` /  /
+//     =====`-.____`.___ \_____/___.-`___.-'=====
+//                       `=---='
+//
+//
+//     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//
+//                     永無BUG大仏
+//
+
 import { handleClick } from "./src/events/handleClick.js";
 import { handleContextMenu } from "./src/events/handleContextMenu.js";
 import { handleKeyDown } from "./src/events/handleKeyDown.js";
 import { handleKeyUp } from "./src/events/handleKeyUp.js";
 import { handleMouseClick } from "./src/events/handleMouseDown.js";
 import { handleMouseUp } from "./src/events/handleMouseUp.js";
-
-const PLAYER_SPEED = 5;
-const BULLET_SPEED = 10;
+import { handleMouseMove } from "./src/events/handleMouseMove.js";
+import { GameState } from "./src/states/GameState.js";
+import { PlayerShip } from "./src/objects/PlayerShip.js";
+import { EnemyObject } from "./src/objects/EnemyObject.js";
+import { InteractionState } from "./src/states/InteractionState.js";
 
 const canvas = document.getElementById("mainCanvas");
 const ctx = canvas.getContext("2d");
 
-let shootIntervalId;
-let isShooting = false;
-
-const objects = [
-  { type: "player", x: 0, y: 0, width: 40, height: 50, color: "blue" },
-];
-const interactFlags = {
-  up: false,
-  down: false,
-  left: false,
-  right: false,
-  leftClick: false,
-  rightClick: false,
-};
+export const gameState = new GameState();
+export const interactionState = new InteractionState();
+export let mouseX = 0;
+export let mouseY = 0;
 
 /**
  * 描画
@@ -33,9 +51,11 @@ function draw() {
   // リセット
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+  // 状態更新
+  gameState.update();
+
   // 描画
-  updatePlayerPosition();
-  updateBulletPosition();
+  const objects = gameState.objects;
   objects.forEach((obj) => {
     ctx.fillStyle = obj.color;
     ctx.fillRect(obj.x, obj.y, obj.width, obj.height);
@@ -53,11 +73,17 @@ function init() {
   canvas.height = document.documentElement.clientHeight;
 
   // canvas の中心にプレイヤーを配置
+  const player = gameState.getFirst(PlayerShip);
   const center = getCenterOfCanvas();
-  objects[0].x = center.x;
-  objects[0].y = center.y;
+  player.x = center.x;
+  player.y = center.y;
+
+  // fot test: 敵オブジェクトを追加
+  const enemy = new EnemyObject(center.x, center.y + 50);
+  gameState.objects.push(enemy);
 
   // イベント登録
+  document.addEventListener("mousemove", handleMouseMove);
   document.addEventListener("keydown", handleKeyDown);
   document.addEventListener("keyup", handleKeyUp);
   document.addEventListener("click", handleClick);
@@ -68,67 +94,21 @@ function init() {
   window.requestAnimationFrame(draw);
 }
 
-// プレイヤー関連
-/**
- * プレイヤーを取得する
- * @returns {Object}
- */
-const getPlayerObj = () => objects.find((obj) => obj.type === "player");
-
-/**
- * プレイヤーの位置を更新する
- */
-function updatePlayerPosition() {
-  const player = getPlayerObj();
-  if (interactFlags.up) player.y -= PLAYER_SPEED;
-  if (interactFlags.down) player.y += PLAYER_SPEED;
-  if (interactFlags.left) player.x -= PLAYER_SPEED;
-  if (interactFlags.right) player.x += PLAYER_SPEED;
+function getCenterOfCanvas() {
+  return { x: canvas.width / 2, y: canvas.height / 2 };
 }
 
-// 弾関連
-/**
- * 射撃処理
- */
-function shoot() {
-  const player = getPlayerObj();
-  const bullet = { type: "playerBullet", x: player.x, y: player.y, width: 10, height: 10, color: "red" };
-  objects.push(bullet);
+export function getCanvasSize() {
+  return { width: canvas.width, height: canvas.height };
 }
 
-/**
- * プレイヤーの弾を取得する
- * @returns {Object[]}
- */
-const getPlayerBullets = () => objects.filter((obj) => obj.type === "playerBullet");
-
-/**
- * 弾の位置を更新する
- */
-function updateBulletPosition() {
-  const bullets = getPlayerBullets();
-  if(!bullets) return;
-
-  bullets.forEach((bullet) => {
-    bullet.y += BULLET_SPEED;
-
-    // 画面外に出た弾をobjectsから削除
-    // TODO: 計算量が O(N) （Nはすべてのオブジェクト数）なので、パフォーマンスを改善する
-    if (bullet.y < 0) {
-        objects.splice(objects.indexOf(bullet), 1);
-    }
-  });
+export function getMousePosition() {
+  return { mouseX, mouseY };
 }
 
-/**
- * キャンバスの中心を取得する
- * @returns {Object{x: number, y: number}}
- */
-const getCenterOfCanvas = () => {
-  return {
-    x: canvas.width / 2,
-    y: canvas.height / 2,
-  };
-};
+export function setMousePosition(x, y) {
+  mouseX = x;
+  mouseY = y;
+}
 
 init();

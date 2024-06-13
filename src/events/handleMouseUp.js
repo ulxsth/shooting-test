@@ -1,8 +1,10 @@
+import { interactionState } from "../../index.js";
+
 export const handleMouseUp = (event) => {
   console.log("mouseup: " + event.button);
   if (event.button === 0) {
-    interactFlags.leftClick = false;
+    interactionState.setFlag("leftClick", false);
   } else if (event.button === 2) {
-    interactFlags.rightClick = false;
+    interactionState.setFlag("rightClick", false);
   }
 }

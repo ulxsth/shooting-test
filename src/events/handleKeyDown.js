@@ -1,3 +1,5 @@
+import { interactionState } from "../../index.js";
+
 export const handleKeyDown = (event) => {
   console.log("keydown: " + event.key);
 
@@ -5,19 +7,19 @@ export const handleKeyDown = (event) => {
   switch (event.key) {
     case "ArrowUp":
     case "w":
-      interactFlags.up = true;
+      interactionState.setFlag("up", true);
       break;
     case "ArrowDown":
     case "s":
-      interactFlags.down = true;
+      interactionState.setFlag("down", true);
       break;
     case "ArrowLeft":
     case "a":
-      interactFlags.left = true;
+      interactionState.setFlag("left", true);
       break;
     case "ArrowRight":
     case "d":
-      interactFlags.right = true;
+      interactionState.setFlag("right", true);
       break;
   }
 }
