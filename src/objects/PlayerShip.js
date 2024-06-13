@@ -1,4 +1,3 @@
-import { GameObject } from "./GameObject.js";
 import {
   PLAYER_SHIP_WIDTH,
   PLAYER_SHIP_HEIGHT,
@@ -11,7 +10,7 @@ import { gameState, getCanvasSize, getMousePosition, interactionState } from "..
 import { PlayerBullet } from "./PlayerBullet.js";
 import { Entity } from "./Entity.js";
 import { EnemyBullet } from "./EnemyBullet.js";
-import { EnemyObject } from "./EnemyObject.js";
+import { GameStatusEnum } from "../constants.js";
 
 export class PlayerShip extends Entity {
   constructor(x, y) {
@@ -64,6 +63,11 @@ export class PlayerShip extends Entity {
         this.damage(bullet.damage);
       }
     });
+
+    // 死亡判定
+    if (this.hp <= 0) {
+      gameState.setGameStatus(GameStatusEnum.GAME_OVER);
+    }
   }
 
   /**

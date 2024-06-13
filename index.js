@@ -35,6 +35,7 @@ import { GameState } from "./src/states/GameState.js";
 import { PlayerShip } from "./src/objects/PlayerShip.js";
 import { EnemyObject } from "./src/objects/EnemyObject.js";
 import { InteractionState } from "./src/states/InteractionState.js";
+import { GameStatusEnum } from "./src/constants.js";
 
 const canvas = document.getElementById("mainCanvas");
 const ctx = canvas.getContext("2d");
@@ -50,6 +51,13 @@ export let mouseY = 0;
 function draw() {
   // リセット
   ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  if (gameState.gameStatus === GameStatusEnum.GAME_OVER) {
+    ctx.font = "48px serif";
+    ctx.fillStyle = "red";
+    ctx.textAlign = "center";
+    ctx.fillText("GAME OVER", canvas.width / 2, canvas.height / 2);
+  }
 
   // 状態更新
   gameState.update();

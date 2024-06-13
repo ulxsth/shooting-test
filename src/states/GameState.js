@@ -1,4 +1,5 @@
 import { PlayerShip } from "../objects/PlayerShip.js";
+import { GameStatusEnum } from "../constants.js";
 
 export class GameState {
   constructor() {
@@ -57,13 +58,12 @@ export class GameState {
    * すべてのオブジェクトの状態を更新する
    */
   update() {
+    if (this.gameStatus === GameStatusEnum.GAME_OVER) {
+      return;
+    }
+
     this.objects.forEach((obj) => {
       obj.update();
     });
   }
 }
-
-export const GameStatusEnum = Object.freeze({
-  PLAYING: 0,
-  GAME_OVER: 1,
-});
