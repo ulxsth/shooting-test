@@ -7,7 +7,7 @@ import {
   PLAYER_HP,
 } from "../constants.js";
 import { gameState, getCanvasSize, getMousePosition, interactionState } from "../../index.js";
-import { PlayerBullet } from "./PlayerBullet.js";
+import { PlayerSpreadShotBullet } from "./PlayerSpreadShotBullet.js";
 import { PlayerFocusShotBullet } from "./PlayerFocusShotBullet.js";
 import { Entity } from "./Entity.js";
 import { EnemyBullet } from "./EnemyBullet.js";
@@ -25,7 +25,7 @@ export class PlayerShip extends Entity {
    * 射撃処理
    */
   shoot() {
-    const bullet = new PlayerBullet(this.x, this.y, this.direction);
+    const bullet = new PlayerSpreadShotBullet(this.x, this.y, this.direction);
     gameState.registerObject(bullet);
   }
 
