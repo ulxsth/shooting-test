@@ -8,7 +8,7 @@ import {
 import { Bullet } from "./Bullet.js";
 
 export class PlayerBullet extends Bullet {
-  constructor(x, y, direction) {
+  constructor(x, y, direction, damage) {
     super(
       x,
       y,
@@ -16,7 +16,7 @@ export class PlayerBullet extends Bullet {
       PLAYER_BULLET_HEIGHT,
       PLAYER_BULLET_COLOR,
       direction,
-      PLAYER_BULLET_DAMAGE,
+      damage,
       PLAYER_BULLET_SPEED
     );
   }

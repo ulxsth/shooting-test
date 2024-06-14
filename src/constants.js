@@ -9,6 +9,7 @@ export const PLAYER_SHIP_COLOR = "blue";
 export const PLAYER_SPEED = 5;
 export const PLAYER_SHOOT_INTERVAL = 50;
 export const PLAYER_HP = 100;
+export const PLAYER_MAX_FOCUS_TIME = 5000;
 
 export const PLAYER_BULLET_WIDTH = 10;
 export const PLAYER_BULLET_HEIGHT = 10;

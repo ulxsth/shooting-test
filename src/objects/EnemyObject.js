@@ -21,6 +21,7 @@ export class EnemyObject extends Entity {
    * @param {number} damage
    */
   damage(damage) {
+    console.log("damaged: ", damage);
     this.hp -= damage;
   }
 
