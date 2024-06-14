@@ -15,6 +15,7 @@ import { GameStatusEnum } from "../constants.js";
 export class PlayerShip extends Entity {
   constructor(x, y) {
     super(x, y, PLAYER_SHIP_WIDTH, PLAYER_SHIP_HEIGHT, PLAYER_SHIP_COLOR, PLAYER_HP, 0);
+    this.isFocusing = false;
     this.shootIntervalId = null;
   }
 
@@ -32,27 +33,37 @@ export class PlayerShip extends Entity {
     const flags = interactionState.getAllFlags();
 
     // 移動
-    if (flags.up && this.y - PLAYER_SPEED >= 0) {
-      this.y -= PLAYER_SPEED;
-    }
-    if (flags.left && this.x - PLAYER_SPEED >= 0) {
-      this.x -= PLAYER_SPEED;
-    }
-    if (flags.down && this.y + PLAYER_SPEED + PLAYER_SHIP_HEIGHT <= canvasHeight) {
-      this.y += PLAYER_SPEED;
-    }
-    if (flags.right && this.x + PLAYER_SPEED + PLAYER_SHIP_WIDTH <= canvasWidth) {
-      this.x += PLAYER_SPEED;
+    if (!this.isFocusing) {
+      if (flags.up && this.y - PLAYER_SPEED >= 0) {
+        this.y -= PLAYER_SPEED;
+      }
+      if (flags.left && this.x - PLAYER_SPEED >= 0) {
+        this.x -= PLAYER_SPEED;
+      }
+      if (flags.down && this.y + PLAYER_SPEED + PLAYER_SHIP_HEIGHT <= canvasHeight) {
+        this.y += PLAYER_SPEED;
+      }
+      if (flags.right && this.x + PLAYER_SPEED + PLAYER_SHIP_WIDTH <= canvasWidth) {
+        this.x += PLAYER_SPEED;
+      }
     }
 
     // 射撃
-    if(flags.leftClick && this.shootIntervalId === null) {
+    if (flags.leftClick && this.shootIntervalId === null) {
       this.shootIntervalId = setInterval(() => {
         this.shoot();
       }, PLAYER_SHOOT_INTERVAL);
     } else if (!flags.leftClick && this.shootIntervalId !== null) {
       clearInterval(this.shootIntervalId);
       this.shootIntervalId = null;
+    }
+
+    // 狙い撃ち
+    if (flags.rightClick) {
+      this.isFocusing = true;
+    } else if (this.isFocusing && !flags.rightClick) {
+      this.shootAt(getMousePosition());
+      this.isFocusing = false;
     }
 
     // 衝突判定
@@ -76,5 +87,13 @@ export class PlayerShip extends Entity {
   updateDirection() {
     const { mouseX, mouseY } = getMousePosition();
     this.direction = Math.atan2(mouseY - this.y, mouseX - this.x);
+  }
+
+  /**
+   * マウスの位置を取得し、プレイヤーの方向を更新
+   */
+  shootAt(mousePosition) {
+    this.direction = Math.atan2(mousePosition.y - this.y, mousePosition.x - this.x);
+    this.shoot();
   }
 }
