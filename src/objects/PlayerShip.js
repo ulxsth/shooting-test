@@ -21,14 +21,6 @@ export class PlayerShip extends Entity {
     this.shootIntervalId = null;
   }
 
-  /**
-   * 射撃処理
-   */
-  shoot() {
-    const bullet = new PlayerSpreadShotBullet(this.x, this.y, this.direction);
-    gameState.registerObject(bullet);
-  }
-
   update() {
     this.updateDirection();
     const { width: canvasWidth, height: canvasHeight } = getCanvasSize();
@@ -92,11 +84,22 @@ export class PlayerShip extends Entity {
   }
 
   /**
-   * マウスの位置を取得し、プレイヤーの方向を更新
+   * プレイヤーの向き（マウスカーソルのある方向）に散弾を発射する。
+   * 左クリック用の射撃。
+   */
+  shoot() {
+    const bullet = new PlayerSpreadShotBullet(this.x, this.y, this.direction);
+    gameState.registerObject(bullet);
+  }
+
+  /**
+   * マウスの位置に狙い撃ち弾を発射する。
+   * 右クリック用の射撃。
    */
   shootAtMousePosition() {
     const { mouseX, mouseY } = getMousePosition();
-    const bullet = new PlayerFocusShotBullet(mouseX, mouseY, 0, 1, 100);
+    const damage = 100;
+    const bullet = new PlayerFocusShotBullet(mouseX, mouseY, damage);
     gameState.registerObject(bullet);
   }
 }

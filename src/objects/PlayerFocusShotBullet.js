@@ -2,14 +2,12 @@ import { gameState } from "../../index.js";
 import { PlayerBullet } from "./PlayerBullet.js";
 
 /**
- * プレイヤーの狙い撃ち弾
- * direction: 0
+ * プレイヤーの右クリック（狙い撃ち）用の弾
  * damage: 100
- * speed: 0
  */
 export class PlayerFocusShotBullet extends PlayerBullet {
-  constructor(x, y) {
-    super(x, y, 0);
+  constructor(x, y, damage) {
+    super(x, y, 0, damage);
     this.existTime = 5;
   }
 
