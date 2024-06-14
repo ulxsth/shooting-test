@@ -5,6 +5,7 @@ import {
   PLAYER_SPEED,
   PLAYER_SHOOT_INTERVAL,
   PLAYER_HP,
+  PLAYER_MAX_FOCUS_TIME,
 } from "../constants.js";
 import { gameState, getCanvasSize, getMousePosition, interactionState } from "../../index.js";
 import { PlayerSpreadShotBullet } from "./PlayerSpreadShotBullet.js";
@@ -13,11 +14,11 @@ import { Entity } from "./Entity.js";
 import { EnemyBullet } from "./EnemyBullet.js";
 import { GameStatusEnum } from "../constants.js";
 
-
 export class PlayerShip extends Entity {
   constructor(x, y) {
     super(x, y, PLAYER_SHIP_WIDTH, PLAYER_SHIP_HEIGHT, PLAYER_SHIP_COLOR, PLAYER_HP, 0);
     this.isFocusing = false;
+    this.focusTime = 0;
     this.shootIntervalId = null;
   }
 
@@ -53,11 +54,16 @@ export class PlayerShip extends Entity {
     }
 
     // 狙い撃ち
-    if (flags.rightClick) {
+    if (!this.isFocusing && flags.rightClick) {
       this.isFocusing = true;
+
+    } else if (this.isFocusing && flags.rightClick && this.focusTime < PLAYER_MAX_FOCUS_TIME) {
+      this.focusTime++;
+
     } else if (this.isFocusing && !flags.rightClick) {
       this.shootAtMousePosition();
       this.isFocusing = false;
+      this.focusTime = 0;
     }
 
     // 衝突判定
@@ -91,14 +97,14 @@ export class PlayerShip extends Entity {
     const bullet = new PlayerSpreadShotBullet(this.x, this.y, this.direction);
     gameState.registerObject(bullet);
   }
-
+  
   /**
    * マウスの位置に狙い撃ち弾を発射する。
    * 右クリック用の射撃。
    */
   shootAtMousePosition() {
     const { mouseX, mouseY } = getMousePosition();
-    const damage = 100;
+    const damage = this.focusTime;
     const bullet = new PlayerFocusShotBullet(mouseX, mouseY, damage);
     gameState.registerObject(bullet);
   }
