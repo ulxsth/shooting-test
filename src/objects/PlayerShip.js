@@ -8,9 +8,11 @@ import {
 } from "../constants.js";
 import { gameState, getCanvasSize, getMousePosition, interactionState } from "../../index.js";
 import { PlayerBullet } from "./PlayerBullet.js";
+import { PlayerFocusShotBullet } from "./PlayerFocusShotBullet.js";
 import { Entity } from "./Entity.js";
 import { EnemyBullet } from "./EnemyBullet.js";
 import { GameStatusEnum } from "../constants.js";
+
 
 export class PlayerShip extends Entity {
   constructor(x, y) {
@@ -94,6 +96,7 @@ export class PlayerShip extends Entity {
    */
   shootAtMousePosition() {
     const { mouseX, mouseY } = getMousePosition();
-    
+    const bullet = new PlayerFocusShotBullet(mouseX, mouseY, 0, 1, 100);
+    gameState.registerObject(bullet);
   }
 }

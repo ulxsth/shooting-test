@@ -1,8 +1,15 @@
-import { Bullet } from "./Bullet.js";
+import { gameState } from "../../index.js";
+import { PlayerBullet } from "./PlayerBullet.js";
 
-export class PlayerFocusShotBullet extends Bullet {
-  constructor(x, y, direction, damage, speed) {
-    super(x, y, direction, damage, speed);
+/**
+ * プレイヤーの狙い撃ち弾
+ * direction: 0
+ * damage: 100
+ * speed: 0
+ */
+export class PlayerFocusShotBullet extends PlayerBullet {
+  constructor(x, y) {
+    super(x, y, 0);
     this.existTime = 5;
   }
 
