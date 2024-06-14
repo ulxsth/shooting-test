@@ -62,7 +62,7 @@ export class PlayerShip extends Entity {
     if (flags.rightClick) {
       this.isFocusing = true;
     } else if (this.isFocusing && !flags.rightClick) {
-      this.shootAt(getMousePosition());
+      this.shootAtMousePosition();
       this.isFocusing = false;
     }
 
@@ -92,8 +92,8 @@ export class PlayerShip extends Entity {
   /**
    * マウスの位置を取得し、プレイヤーの方向を更新
    */
-  shootAt(mousePosition) {
-    this.direction = Math.atan2(mousePosition.y - this.y, mousePosition.x - this.x);
-    this.shoot();
+  shootAtMousePosition() {
+    const { mouseX, mouseY } = getMousePosition();
+    
   }
 }
